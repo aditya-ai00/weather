@@ -234,3 +234,79 @@ body {
         font-size: 44px;
     }
 }
+
+/* Smooth transition */
+body, .container, .weather-card, input, button {
+    transition: all 0.3s ease;
+}
+
+/* Toggle button */
+/* Theme Toggle - Top Right */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 80px;
+    height: 40px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.toggle-track {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.toggle-icon {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    font-size: 22px;
+    transition: left 0.3s ease;
+    background: transparent;
+}
+
+/* Dark Mode Toggle Style */
+body.dark-mode .theme-toggle {
+    background: #333;
+}
+
+/* Dark mode */
+body.dark-mode {
+    background: #1e1e1e;
+    color: white;
+}
+
+body.dark-mode .container {
+    background: #1e1e1e;
+}
+
+body.dark-mode .current-weather,
+body.dark-mode .forecast-card {
+    background: #2a2a2a;
+    color: white;
+    box-shadow: none;
+}
+
+body.dark-mode .search-box input {
+    background: #2a2a2a;
+    color: white;
+    border: 1px solid #444;
+}
+
+body.dark-mode .search-box button {
+    background: #2a2a2a;
+    color: white;
+}
+
+body.dark-mode .theme-toggle {
+    background: #2a2a2a;
+    border-color: #555;
+}

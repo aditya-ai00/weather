@@ -8,11 +8,25 @@
 </head>
 <body>
     <div class="container">
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <span class="toggle-slider">
+        <span class="toggle-icon">☀️</span>
+        </span>
+        </button>
+
+        <!-- Title -->
         <h1 class="app-title">Weather Dashboard</h1>
 
         <!-- Search Bar -->
         <div class="search-box">
-            <input type="text" id="city" placeholder="Enter city name" onkeydown="if(event.key==='Enter') getWeather()">
+            <input 
+                type="text" 
+                id="city" 
+                placeholder="Enter city name"
+                onkeydown="if(event.key==='Enter') getWeather()"
+            >
             <button onclick="getWeather()">Search</button>
         </div>
 
@@ -31,9 +45,11 @@
                 </div>
                 <img id="weather-icon" class="weather-icon" alt="weather icon">
             </div>
+
             <div class="current-temp">
                 <span id="temp"></span>
             </div>
+
             <div class="current-details">
                 <div class="detail-item">
                     <span class="detail-label">Feels Like</span>

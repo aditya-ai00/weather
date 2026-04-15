@@ -2,12 +2,13 @@ const apiKey = "591574ad50974c7d895202633263101";
 
 function getWeather() {
     const city = document.getElementById("city").value.trim();
+
     if (city === "") {
         showError("Please enter a city name.");
         return;
     }
 
-    // Show loader, hide previous results and errors
+    // Show loader and hide previous results
     showLoader(true);
     hideResults();
     hideError();
@@ -15,13 +16,13 @@ function getWeather() {
     const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=5`;
 
     fetch(url)
-        .then(res => {
+        .then((res) => {
             if (!res.ok) {
                 throw new Error("Network response was not ok");
             }
             return res.json();
         })
-        .then(data => {
+        .then((data) => {
             showLoader(false);
 
             if (data.error) {
@@ -42,14 +43,22 @@ function displayCurrentWeather(data) {
     const current = data.current;
     const location = data.location;
 
-    document.getElementById("city-name").textContent = `${location.name}, ${location.country}`;
-    document.getElementById("weather-condition").textContent = current.condition.text;
-    document.getElementById("weather-icon").src = `https:${current.condition.icon}`;
-    document.getElementById("temp").textContent = `${Math.round(current.temp_c)}°C`;
-    document.getElementById("feels-like").textContent = `${Math.round(current.feelslike_c)}°C`;
-    document.getElementById("humidity").textContent = `${current.humidity}%`;
-    document.getElementById("wind").textContent = `${current.wind_kph} km/h`;
-    document.getElementById("wind-dir").textContent = current.wind_dir;
+    document.getElementById("city-name").textContent =
+        `${location.name}, ${location.country}`;
+    document.getElementById("weather-condition").textContent =
+        current.condition.text;
+    document.getElementById("weather-icon").src =
+        `https:${current.condition.icon}`;
+    document.getElementById("temp").textContent =
+        `${Math.round(current.temp_c)}°C`;
+    document.getElementById("feels-like").textContent =
+        `${Math.round(current.feelslike_c)}°C`;
+    document.getElementById("humidity").textContent =
+        `${current.humidity}%`;
+    document.getElementById("wind").textContent =
+        `${current.wind_kph} km/h`;
+    document.getElementById("wind-dir").textContent =
+        current.wind_dir;
 
     document.getElementById("current-weather").classList.remove("hidden");
 }
@@ -60,12 +69,13 @@ function displayForecast(days) {
 
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-    days.forEach(day => {
+    days.forEach((day) => {
         const date = new Date(day.date + "T00:00:00");
         const dayName = dayNames[date.getDay()];
 
         const card = document.createElement("div");
         card.className = "forecast-card";
+
         card.innerHTML = `
             <div class="forecast-day">${dayName}</div>
             <img src="https:${day.day.condition.icon}" alt="${day.day.condition.text}">
@@ -73,6 +83,7 @@ function displayForecast(days) {
             <div class="forecast-low">${Math.round(day.day.mintemp_c)}°</div>
             <div class="forecast-condition">${day.day.condition.text}</div>
         `;
+
         container.appendChild(card);
     });
 
@@ -97,3 +108,37 @@ function hideResults() {
     document.getElementById("current-weather").classList.add("hidden");
     document.getElementById("forecast-section").classList.add("hidden");
 }
+
+/* Theme Toggle Logic */
+document.addEventListener("DOMContentLoaded", () => {
+    const themeToggle = document.getElementById("theme-toggle");
+    const toggleIcon = document.querySelector(".toggle-icon");
+
+    function updateToggle() {
+    if (document.body.classList.contains("dark-mode")) {
+        toggleIcon.style.transform = "translateX(36px)";
+        toggleIcon.textContent = "🌙";
+    } else {
+        toggleIcon.style.transform = "translateX(0)";
+        toggleIcon.textContent = "☀️";
+    }
+}
+
+    // Load saved theme
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+    }
+
+    updateToggle();
+
+    themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+
+        localStorage.setItem(
+            "theme",
+            document.body.classList.contains("dark-mode") ? "dark" : "light"
+        );
+
+        updateToggle();
+    });
+});
