@@ -1,11 +1,27 @@
 const apiKey = "591574ad50974c7d895202633263101";
 
+//function to tackle gibberish city name 
+function isValidCity(city) {
+    const regex = /^[\p{L}\s.'-]{2,50}$/u;
+    return regex.test(city);
+}
+
 function getWeather() {
-    const city = document.getElementById("city").value.trim();
+    const cityInput = document.getElementById("city");
+    const city = cityInput.value.trim();
     if (city === "") {
+        hideResults(); //to hide previous result to not to mix with current one
         showError("Please enter a city name.");
         return;
     }
+
+    //to prevent from multiple search while api calling 
+    if (!isValidCity(city)) {
+        hideResults();
+        showError("Invalid input. Please enter a valid city name.");
+        return;
+    }
+    cityInput.disabled = true;
 
     // Show loader, hide previous results and errors
     showLoader(true);
@@ -15,17 +31,20 @@ function getWeather() {
     const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=5`;
 
     fetch(url)
-        .then(res => {
-            if (!res.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return res.json();
-        })
+        .then(res => res.json())
+
         .then(data => {
             showLoader(false);
+            cityInput.disabled = false;
 
+            // for api error
             if (data.error) {
-                showError("City not found. Please try again.");
+                showError("City not found. Try a valid city name.");
+                return;
+            }
+
+            if (!data.location || !data.current || !data.forecast) {
+                showError("Incomplete data received. Please try again.");
                 return;
             }
 
@@ -34,7 +53,8 @@ function getWeather() {
         })
         .catch(() => {
             showLoader(false);
-            showError("Unable to fetch weather data. Check your connection and try again.");
+            cityInput.disabled = false;
+            showError("Network error. Please try again.");
         });
 }
 
