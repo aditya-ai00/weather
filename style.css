@@ -251,3 +251,14 @@ body {
 #unit-toggle:active {
     transform: scale(0.95);
 }
+#clear-all {
+    background: rgb(181, 178, 178);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}

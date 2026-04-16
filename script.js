@@ -114,3 +114,12 @@ function hideResults() {
     document.getElementById("current-weather").classList.add("hidden");
     document.getElementById("forecast-section").classList.add("hidden");
 }
+//clear functionality
+function clearAll() {
+    document.getElementById("city").value = "";
+    hideResults();
+    hideError();
+    lastWeatherData = null;
+    isCelsius = true;
+    document.getElementById("unit-toggle").textContent = "Toggle Units";
+}
