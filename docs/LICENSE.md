@@ -177,4 +177,4 @@
       incurred by, or claims asserted against, such Contributor by reason
       of your accepting any such warranty or additional liability.
 
-   **END OF TERMS AND CONDITIONS**
+<h3 align="center">END OF TERMS AND CONDITIONS</h3>
