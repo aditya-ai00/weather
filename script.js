@@ -1,5 +1,8 @@
 const apiKey = config.WEATHER_API_KEY;
 
+let isCelsius = true;
+let lastWeatherData = null;
+
 function getWeather() {
     const city = document.getElementById("city").value.trim();
 
@@ -8,7 +11,6 @@ function getWeather() {
         return;
     }
 
-    // Show loader and hide previous results
     showLoader(true);
     hideResults();
     hideError();
@@ -30,6 +32,7 @@ function getWeather() {
                 return;
             }
 
+            lastWeatherData = data;
             displayCurrentWeather(data);
             displayForecast(data.forecast.forecastday);
         })
@@ -42,6 +45,9 @@ function getWeather() {
 function displayCurrentWeather(data) {
     const current = data.current;
     const location = data.location;
+    const temp = isCelsius ? current.temp_c : current.temp_f;
+    const feels = isCelsius ? current.feelslike_c : current.feelslike_f;
+    const wind = isCelsius ? `${current.wind_kph} km/h` : `${current.wind_mph} mph`;
 
     document.getElementById("city-name").textContent =
         `${location.name}, ${location.country}`;
@@ -50,13 +56,12 @@ function displayCurrentWeather(data) {
     document.getElementById("weather-icon").src =
         `https:${current.condition.icon}`;
     document.getElementById("temp").textContent =
-        `${Math.round(current.temp_c)}°C`;
+        `${Math.round(temp)}°${isCelsius ? "C" : "F"}`;
     document.getElementById("feels-like").textContent =
-        `${Math.round(current.feelslike_c)}°C`;
+        `${Math.round(feels)}°${isCelsius ? "C" : "F"}`;
     document.getElementById("humidity").textContent =
         `${current.humidity}%`;
-    document.getElementById("wind").textContent =
-        `${current.wind_kph} km/h`;
+    document.getElementById("wind").textContent = wind;
     document.getElementById("wind-dir").textContent =
         current.wind_dir;
 
@@ -72,6 +77,8 @@ function displayForecast(days) {
     days.forEach((day) => {
         const date = new Date(day.date + "T00:00:00");
         const dayName = dayNames[date.getDay()];
+        const maxTemp = isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f;
+        const minTemp = isCelsius ? day.day.mintemp_c : day.day.mintemp_f;
 
         const card = document.createElement("div");
         card.className = "forecast-card";
@@ -79,8 +86,8 @@ function displayForecast(days) {
         card.innerHTML = `
             <div class="forecast-day">${dayName}</div>
             <img src="https:${day.day.condition.icon}" alt="${day.day.condition.text}">
-            <div class="forecast-high">${Math.round(day.day.maxtemp_c)}°</div>
-            <div class="forecast-low">${Math.round(day.day.mintemp_c)}°</div>
+            <div class="forecast-high">${Math.round(maxTemp)}°</div>
+            <div class="forecast-low">${Math.round(minTemp)}°</div>
             <div class="forecast-condition">${day.day.condition.text}</div>
         `;
 
@@ -88,6 +95,17 @@ function displayForecast(days) {
     });
 
     document.getElementById("forecast-section").classList.remove("hidden");
+}
+
+function toggleUnit() {
+    isCelsius = !isCelsius;
+    const btn = document.getElementById("unit-toggle");
+    btn.textContent = isCelsius ? "Switch to °F" : "Switch to °C";
+
+    if (lastWeatherData) {
+        displayCurrentWeather(lastWeatherData);
+        displayForecast(lastWeatherData.forecast.forecastday);
+    }
 }
 
 function showLoader(show) {
@@ -115,16 +133,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleIcon = document.querySelector(".toggle-icon");
 
     function updateToggle() {
-    if (document.body.classList.contains("dark-mode")) {
-        toggleIcon.style.transform = "translateX(36px)";
-        toggleIcon.textContent = "🌙";
-    } else {
-        toggleIcon.style.transform = "translateX(0)";
-        toggleIcon.textContent = "☀️";
+        if (document.body.classList.contains("dark-mode")) {
+            toggleIcon.style.transform = "translateX(36px)";
+            toggleIcon.textContent = "🌙";
+        } else {
+            toggleIcon.style.transform = "translateX(0)";
+            toggleIcon.textContent = "☀️";
+        }
     }
-}
 
-    // Load saved theme
     if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark-mode");
     }

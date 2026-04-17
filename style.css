@@ -273,6 +273,27 @@ body, .container, .weather-card, input, button {
     background: transparent;
 }
 
+#unit-toggle {
+    margin-left: 10px;
+    background: #4dabf7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+#unit-toggle:hover {
+    background: #339af0;
+}
+
+#unit-toggle:active {
+    transform: scale(0.95);
+}
+
 /* Dark Mode Toggle Style */
 body.dark-mode .theme-toggle {
     background: #333;
