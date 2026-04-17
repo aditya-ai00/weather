@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const apiKey = config.API_KEY;
-=======
-const apiKey = "f12945cccd9a4c4ba1194028261604";
->>>>>>> 6dadf0d (save local changes before pushing to branch)
+const apiKey = config.WEATHER_API_KEY;
 
 function getWeather() {
     const city = document.getElementById("city").value.trim();
