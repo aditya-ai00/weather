@@ -29,6 +29,19 @@ function getWeather() {
       document.getElementById("condition").innerText =
         data.weather[0].description;
 
+      const condition = data.weather[0].main.toLowerCase();
+const iconMap = {
+  "clear": "☀️",
+  "clouds": "☁️",
+  "rain": "🌧️",
+  "drizzle": "🌦️",
+  "snow": "❄️",
+  "thunderstorm": "⛈️",
+  "mist": "🌫️",
+  "fog": "🌫️"
+};
+const icon = iconMap[condition] || "🌡️";
+document.getElementById("weather-icon").innerText = icon;
     })
     .catch(() => {
       alert("City not found");
