@@ -1,73 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather Dashboard</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="app-title">Weather Dashboard</h1>
 
-      <!-- Search Bar -->
-      <div class="search-box">
-        <input
-          type="text"
-          id="city"
-          placeholder="Enter city name"
-          onkeydown="if (event.key === 'Enter') getWeather();"
-        />
-        <button onclick="getWeather()">Search</button>
-        <button id="unit-toggle" onclick="toggleUnit()">Toggle Units</button>
-      </div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
-      <!-- Loading Spinner -->
-      <div id="loader" class="loader hidden"></div>
+<body>
 
-      <!-- Error Message -->
-      <p id="error-msg" class="error-msg hidden"></p>
+<h1>Weather Dashboard</h1>
 
-      <!-- Current Weather Card -->
-      <div id="current-weather" class="current-weather hidden">
-        <div class="current-main">
-          <div>
-            <h2 id="city-name"></h2>
-            <p id="weather-condition" class="condition"></p>
-          </div>
-          <img id="weather-icon" class="weather-icon" alt="weather icon" />
-        </div>
-        <div class="current-temp">
-          <span id="temp"></span>
-        </div>
-        <div class="current-details">
-          <div class="detail-item">
-            <span class="detail-label">Feels Like</span>
-            <span id="feels-like" class="detail-value"></span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Humidity</span>
-            <span id="humidity" class="detail-value"></span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Wind</span>
-            <span id="wind" class="detail-value"></span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Wind Dir</span>
-            <span id="wind-dir" class="detail-value"></span>
-          </div>
-        </div>
-      </div>
+<div class="search-box">
+<input type="text" id="city" placeholder="Enter city name">
+<button onclick="getWeather()">Search</button>
+</div>
 
-      <!-- 5-Day Forecast -->
-      <div id="forecast-section" class="forecast-section hidden">
-        <h2 class="forecast-title">5-Day Forecast</h2>
-        <div id="forecast-cards" class="forecast-cards"></div>
-      </div>
-    </div>
+<div id="weather-card">
+<h2 id="name">City</h2>
+<p id="temp">-- °C</p>
+<p id="condition"></p>
+</div>
 
-    <script src="config.js"></script>
-    <script src="script.js"></script>
-  </body>
+<script src="script.js"></script>
+
+</body>
 </html>
