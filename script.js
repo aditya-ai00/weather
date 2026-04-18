@@ -1,4 +1,4 @@
-const apiKey = config.API_KEY;
+const apiKey = config.WEATHER_API_KEY;
 
 let isCelsius = true; //toggle state
 let lastWeatherData = null;
