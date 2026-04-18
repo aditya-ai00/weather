@@ -4,15 +4,87 @@
     box-sizing: border-box;
 }
 
+
 body {
-    font-family: 'Segoe UI', 'Gill Sans', Calibri, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI';
+    background: linear-gradient(135deg, #1e3c72, #2a5298); /* BLUE */
+    height: 100vh;
     display: flex;
     justify-content: center;
-    padding: 40px 16px;
+    align-items: center;
+
+}
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
+/* Glass container */
+.container {
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align: center;
+    color: white;
+}
+
+/* Title */
+.app-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Search */
+.search-box {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.search-box input {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    width: 60%;
+}
+
+.search-box button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #ff6b6b;
+    color: white;
+    cursor: pointer;
+}
+
+/* Weather Card */
+.current-weather {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.15);
+}
+
+/* Forecast cards */
+.forecast-cards {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    overflow-x: auto;
+}
+
+.forecast-card {
+    min-width: 80px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+}
 .container {
     width: 100%;
     max-width: 700px;

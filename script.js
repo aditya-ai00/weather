@@ -1,40 +1,40 @@
-const apiKey = config.API_KEY;
+const apiKey = config.WEATHER_API_KEY;
 
 function getWeather() {
     const city = document.getElementById("city").value.trim();
+
     if (city === "") {
         showError("Please enter a city name.");
         return;
     }
 
-    // Show loader, hide previous results and errors
     showLoader(true);
     hideResults();
     hideError();
 
-    const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=5`;
+    const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=5`;
 
     fetch(url)
-        .then(res => {
-            if (!res.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return res.json();
-        })
+        .then(res => res.json())
         .then(data => {
             showLoader(false);
 
+            console.log(data); // 🔥 debug
+
             if (data.error) {
-                showError("City not found. Please try again.");
+                showError(data.error.message);
                 return;
             }
 
             displayCurrentWeather(data);
             displayForecast(data.forecast.forecastday);
+
+            setDynamicBackground(data); // ✅ FIXED
         })
-        .catch(() => {
+        .catch(error => {
+            console.log(error);
             showLoader(false);
-            showError("Unable to fetch weather data. Check your connection and try again.");
+            showError("Error fetching weather");
         });
 }
 
@@ -53,7 +53,7 @@ function displayCurrentWeather(data) {
 
     document.getElementById("current-weather").classList.remove("hidden");
 }
-
+setDynamicBackground(data);
 function displayForecast(days) {
     const container = document.getElementById("forecast-cards");
     container.innerHTML = "";
@@ -96,4 +96,36 @@ function hideError() {
 function hideResults() {
     document.getElementById("current-weather").classList.add("hidden");
     document.getElementById("forecast-section").classList.add("hidden");
+}
+function setDynamicBackground(data) {
+    const condition = data.current.condition.text.toLowerCase();
+    const isDay = data.current.is_day;
+
+    let bgImage = "";
+
+    if (condition.includes("rain")) {
+        bgImage = "url('https://images.unsplash.com/photo-1501696461415-6bd6660c6742')";
+    } 
+    else if (condition.includes("cloud")) {
+        bgImage = "url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31')";
+    } 
+    else if (condition.includes("clear") && isDay) {
+        bgImage = "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9')";
+    } 
+    else if (condition.includes("clear") && !isDay) {
+        bgImage = "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee')";
+    } 
+    else if (!isDay) {
+        bgImage = "url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429')";
+    } 
+    else {
+        bgImage = "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')";
+    }
+
+    document.body.style.background = `
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+        ${bgImage}
+    `;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
 }
