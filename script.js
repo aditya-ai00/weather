@@ -1,4 +1,3 @@
-// const apiKey = "3a4dc2581af7beaa310a4dbc43bd8d2c";
 
 // Myapi key
 const apiKey = config.WEATHER_API_KEY;
