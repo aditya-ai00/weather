@@ -1,37 +1,37 @@
-const apiKey = "3a4dc2581af7beaa310a4dbc43bd8d2c";
-
 function getWeather() {
 
-  const city = document.getElementById("city").value.trim();
+const city = document.getElementById("city").value.trim();
 
-  if (!city) {
-    alert("Please enter a city name");
-    return;
-  }
+if (!city) {
+alert("Please enter a city name");
+return;
+}
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},IN&appid=${apiKey}&units=metric`;
+const apiKey = config.WEATHER_API_KEY;
 
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("City not found");
-      }
-      return response.json();
-    })
-    .then(data => {
+const url =
+`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
 
-      document.getElementById("name").innerText =
-        data.name + ", " + data.sys.country;
+fetch(url)
+.then(res => res.json())
+.then(data => {
 
-      document.getElementById("temp").innerText =
-        Math.round(data.main.temp) + " °C";
+if (data.error) {
+alert(data.error.message);
+return;
+}
 
-      document.getElementById("condition").innerText =
-        data.weather[0].description;
+document.getElementById("name").innerText =
+data.location.name + ", " + data.location.country;
 
-    })
-    .catch(() => {
-      alert("City not found");
-    });
+document.getElementById("temp").innerText =
+Math.round(data.current.temp_c) + " °C";
 
+document.getElementById("condition").innerText =
+data.current.condition.text;
+
+document.getElementById("icon").src =
+"https:" + data.current.condition.icon;
+
+});
 }
