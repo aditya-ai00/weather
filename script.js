@@ -1,4 +1,9 @@
-const apiKey = "3a4dc2581af7beaa310a4dbc43bd8d2c";
+// const apiKey = "3a4dc2581af7beaa310a4dbc43bd8d2c";
+
+// Myapi key
+const apiKey = config.WEATHER_API_KEY;
+
+
 
 function getWeather() {
 
@@ -29,9 +34,29 @@ function getWeather() {
       document.getElementById("condition").innerText =
         data.weather[0].description;
 
+      document.getElementById("humidity").innerHTML = "<b>Humidity: </b>" +
+      data.main.humidity + " %";
+
+      document.getElementById("wind").innerHTML = "<b>Wind: </b>" +
+      data.wind.speed + " Km/h";
+
+      const oldIcon = document.getElementById("icon");
+      if (oldIcon) oldIcon.remove();
+
+      const iconCode = data.weather[0].icon;
+      const img = document.createElement("img");
+      img.id = "icon";
+      img.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+      img.alt = "weather icon";
+
+      const card = document.getElementById("weather-card");
+      card.insertBefore(img, document.getElementById("temp"));
+
     })
     .catch(() => {
       alert("City not found");
     });
+
+    document.getElementById("city").value = "";
 
 }
