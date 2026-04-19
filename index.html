@@ -7,65 +7,76 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1 class="app-title">Weather Dashboard</h1>
+    <div class="app-layout">
 
-      <!-- Search Bar -->
-      <div class="search-box">
-        <input
-          type="text"
-          id="city"
-          placeholder="Enter city name"
-          onkeydown="if (event.key === 'Enter') getWeather();"
-        />
-        <button onclick="getWeather()">Search</button>
-        <button id="unit-toggle" onclick="toggleUnit()">Toggle Units</button>
-        <button id="clear-all" onclick="clearAll()">Clear All</button>
+      <!-- LEFT: MAIN APP -->
+      <div class="container main-content">
+        <h1 class="app-title">Weather Dashboard</h1>
+
+        <!-- Search Bar -->
+        <div class="search-box">
+          <input
+            type="text"
+            id="city"
+            placeholder="Enter city name"
+            onkeydown="if (event.key === 'Enter') getWeather();"
+          />
+          <button onclick="getWeather()">Search</button>
+          <button id="unit-toggle" onclick="toggleUnit()">Toggle Units</button>
+          <button id="clear-all" onclick="ClearAll()">Clear All</button>
+        </div>
+
+        <!-- Loader -->
+        <div id="loader" class="loader hidden"></div>
+
+        <!-- Error -->
+        <p id="error-msg" class="error-msg hidden"></p>
+
+        <!-- Current Weather -->
+        <div id="current-weather" class="current-weather hidden">
+          <div class="current-main">
+            <div>
+              <h2 id="city-name"></h2>
+              <p id="weather-condition" class="condition"></p>
+            </div>
+            <img id="weather-icon" class="weather-icon" />
+          </div>
+
+          <div class="current-temp">
+            <span id="temp"></span>
+          </div>
+
+          <div class="current-details">
+            <div class="detail-item">
+              <span class="detail-label">Feels Like</span>
+              <span id="feels-like"></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Humidity</span>
+              <span id="humidity"></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Wind</span>
+              <span id="wind"></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Wind Dir</span>
+              <span id="wind-dir"></span>
+            </div>
+          </div>
+        </div>
+
+        <div id="forecast-section" class="forecast-section hidden">
+          <h2 class="forecast-title">5-Day Forecast</h2>
+          <div id="forecast-cards" class="forecast-cards"></div>
+        </div>
+      </div>
+      <div class="history-panel">
+        <h3>History</h3>
+        <div id="history-list" class="history-list"></div>
+        <button class="clear-btn" onclick="clearHistory()">Clear</button>
       </div>
 
-      <!-- Loading Spinner -->
-      <div id="loader" class="loader hidden"></div>
-
-      <!-- Error Message -->
-      <p id="error-msg" class="error-msg hidden"></p>
-
-      <!-- Current Weather Card -->
-      <div id="current-weather" class="current-weather hidden">
-        <div class="current-main">
-          <div>
-            <h2 id="city-name"></h2>
-            <p id="weather-condition" class="condition"></p>
-          </div>
-          <img id="weather-icon" class="weather-icon" alt="weather icon" />
-        </div>
-        <div class="current-temp">
-          <span id="temp"></span>
-        </div>
-        <div class="current-details">
-          <div class="detail-item">
-            <span class="detail-label">Feels Like</span>
-            <span id="feels-like" class="detail-value"></span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Humidity</span>
-            <span id="humidity" class="detail-value"></span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Wind</span>
-            <span id="wind" class="detail-value"></span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Wind Dir</span>
-            <span id="wind-dir" class="detail-value"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5-Day Forecast -->
-      <div id="forecast-section" class="forecast-section hidden">
-        <h2 class="forecast-title">5-Day Forecast</h2>
-        <div id="forecast-cards" class="forecast-cards"></div>
-      </div>
     </div>
 
     <script src="config.js"></script>
