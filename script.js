@@ -42,12 +42,9 @@ function updateWeatherIcon(weather = {}) {
 function getWeather() {
   const city = document.getElementById("city").value.trim();
 
-  if (!city) {
-    alert("Please enter a city name");
-    return;
-  }
+navigator.geolocation.getCurrentPosition(showPosition);
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},IN&appid=${apiKey}&units=metric`;
+function showPosition(position){
 
   fetch(url)
     .then(response => {
@@ -59,11 +56,12 @@ function getWeather() {
     .then(data => {
       const currentWeather = data.weather && data.weather[0] ? data.weather[0] : {};
 
-      document.getElementById("name").innerText =
-        data.name + ", " + data.sys.country;
+const url =
+`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
 
-      document.getElementById("temp").innerText =
-        Math.round(data.main.temp) + " °C";
+fetch(url)
+.then(res => res.json())
+.then(data => {
 
       document.getElementById("condition").innerText =
         currentWeather.description || "Weather condition unavailable";
