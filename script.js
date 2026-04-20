@@ -1,6 +1,16 @@
 const apiKey = "3a4dc2581af7beaa310a4dbc43bd8d2c";
 const defaultWeatherIcon = "https://openweathermap.org/img/wn/01d@2x.png";
 
+function setMessage(message = "") {
+  const messageElement = document.getElementById("message");
+
+  if (!messageElement) {
+    return;
+  }
+
+  messageElement.innerText = message;
+}
+
 function getWeatherIconUrl(iconCode) {
   return iconCode
     ? `https://openweathermap.org/img/wn/${iconCode}@2x.png`
@@ -40,19 +50,23 @@ function updateWeatherIcon(weather = {}) {
 }
 
 function getWeather() {
-  const city = document.getElementById("city").value.trim();
+  const cityInput = document.getElementById("city");
+  const city = cityInput ? cityInput.value.trim() : "";
 
   if (!city) {
-    alert("Please enter a city name");
+    setMessage("Please enter a city name.");
     return;
   }
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},IN&appid=${apiKey}&units=metric`;
+  setMessage("");
+
+  // Allow worldwide lookups and preserve optional "city,country" input like "Paris,FR".
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
 
   fetch(url)
     .then(response => {
       if (!response.ok) {
-        throw new Error("City not found");
+        throw new Error(response.status === 404 ? "City not found" : "Unable to fetch weather data");
       }
       return response.json();
     })
@@ -69,8 +83,13 @@ function getWeather() {
         currentWeather.description || "Weather condition unavailable";
 
       updateWeatherIcon(currentWeather);
+      setMessage("");
     })
-    .catch(() => {
-      alert("City not found");
+    .catch(error => {
+      setMessage(
+        error.message === "City not found"
+          ? "City not found. Try searching for a different city or use city,country such as Paris,FR."
+          : "Unable to fetch weather data right now. Please try again."
+      );
     });
 }

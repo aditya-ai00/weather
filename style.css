@@ -28,6 +28,13 @@ color:white;
 cursor:pointer;
 }
 
+#message{
+min-height:24px;
+margin:16px 0 0;
+color:#ffe9a8;
+font-size:16px;
+}
+
 #weather-card{
 margin-top:40px;
 }
