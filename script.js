@@ -1,82 +1,50 @@
-const apiKey = "f0133e94263d448c963164120261904";
-
+// Myapi key
+const apiKey = config.WEATHER_API_KEY;
 
 function getWeather() {
+  const city = document.getElementById("city").value.trim();
 
-const city = document.getElementById("city").value.trim();
+  if (!city) {
+    alert("Please enter a city name");
+    return;
+  }
 
-if (!city) {
-alert("Please enter a city name");
-return;
-}
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}`;
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("City not found");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      document.getElementById("name").innerText =
+        data.name + ", " + data.sys.country;
 
-fetch(url)
-.then(res => res.json())
-.then(data => {
+      document.getElementById("temp").innerText =
+        Math.round(data.main.temp) + " °C";
 
-if (data.error) {
-alert(data.error.message);
-return;
-}
+      document.getElementById("condition").innerHTML = "<b>Condition: </b>" + data.weather[0].description;
 
-updateWeather(data);
+      document.getElementById("humidity").innerHTML = "<b>Humidity: </b>" + data.main.humidity + " %";
 
-})
-.catch(() => {
-alert("Failed to fetch weather data");
-});
+      document.getElementById("wind").innerHTML = "<b>Wind: </b>" + data.wind.speed + " Km/h";
 
-}
+      const oldIcon = document.getElementById("icon");
+      if (oldIcon) oldIcon.remove();
 
+      const iconCode = data.weather[0].icon;
+      const img = document.createElement("img");
+      img.id = "icon";
+      img.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+      img.alt = "weather icon";
 
-
-function updateWeather(data){
-
-document.getElementById("name").innerText =
-data.location.name + ", " + data.location.country;
-
-document.getElementById("temp").innerText =
-Math.round(data.current.temp_c) + " °C";
-
-document.getElementById("condition").innerText =
-data.current.condition.text;
-
-document.getElementById("icon").src =
-"https:" + data.current.condition.icon;
-
-}
-
-
-
-document.getElementById("city").addEventListener("keypress", function(e){
-
-if(e.key === "Enter"){
-getWeather();
-}
-
-});
-
-
-
-navigator.geolocation.getCurrentPosition(showPosition);
-
-function showPosition(position){
-
-const lat = position.coords.latitude;
-const lon = position.coords.longitude;
-
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
-
-fetch(url)
-.then(res => res.json())
-.then(data => {
-
-updateWeather(data);
-
-});
-
+      const card = document.getElementById("weather-card");
+      card.insertBefore(img, document.getElementById("temp")); 
+    })
+    .catch(() => {
+      alert("City not found");
+    });
+    document.getElementById("city").value = "";
 }
