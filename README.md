@@ -40,6 +40,12 @@ It uses the **OpenWeatherMap API** to fetch real-time data and displays it with 
 🎨 **Clean UI**  
 - Simple, minimal, and user-friendly interface  
 
+🌙 **Dark Mode**  
+- Toggle between light and dark themes for better night usability  
+
+🌡️ **Unit Converter (°C ↔ °F)**  
+- Switch temperature units instantly without extra API calls  
+
 ---
 
 ## 🛠️ Tech Stack
@@ -124,6 +130,8 @@ const config = {
 2. Enter a city name
 3. Press **Enter** or click search
 4. View real-time weather details instantly
+5. Click the **🌙 Dark Mode** button to switch theme  
+6. Use the **Unit Toggle** button to switch between °C and °F  
 
 ---
 
@@ -179,8 +187,6 @@ If you find any bugs or issues, feel free to open an issue.
 
 * 📅 7-Day Weather Forecast
 * 📱 Fully Responsive Design
-* 📍 Auto Location Detection
-* 🌙 Dark Mode Support
 * 📊 Advanced Weather Analytics
 
 ---
@@ -221,3 +227,7 @@ GitHub: [https://github.com/aditya-ai00](https://github.com/aditya-ai00)
 ---
 
 
+## 🆕 Recent Updates
+
+- 🌙 Added Dark Mode with toggle and persistent settings  
+- 🌡️ Added Temperature Unit Converter (°C ↔ °F)  
