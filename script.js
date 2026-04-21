@@ -1,12 +1,23 @@
 const apiKey = config.WEATHER_API_KEY;
-
-let isCelsius = true; //toggle state
+let isRaining = false;
+let isCelsius = true;
 let lastWeatherData = null;
+let activeVideoIndex = 0;
+let currentBackgroundFile = "videos/clear.mp4";
+
+const bgVideos = [
+    document.getElementById("bgVideoA"),
+    document.getElementById("bgVideoB")
+];
+
+const canvasFX = document.getElementById("effectsCanvas");
+const ctxFX = canvasFX.getContext("2d");
+let rainDrops = [];
 
 function getWeather() {
     const city = document.getElementById("city").value.trim();
 
-    if (city === "") {
+    if (!city) {
         showError("Please enter a city name.");
         return;
     }
@@ -18,52 +29,57 @@ function getWeather() {
     const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=5`;
 
     fetch(url)
-
-        .then(res => res.json())
-        .then(data => {
-            showLoader(false);
-
-            console.log(data); // 🔥 debug
-
-        .then(res => {
+        .then((res) => {
             if (!res.ok) {
                 throw new Error("Network error");
             }
             return res.json();
         })
-        .then(data => {
+        .then((data) => {
             showLoader(false);
- d6b85be6808eebbf4d2214c6a08ecf30bdc35af4
+
             if (data.error) {
                 showError(data.error.message);
                 return;
             }
+
             lastWeatherData = data;
             displayCurrentWeather(data);
             displayForecast(data.forecast.forecastday);
-
-            setDynamicBackground(data); // ✅ FIXED
+            setDynamicBackground(data);
         })
-        .catch(error => {
-            console.log(error);
+        .catch(() => {
             showLoader(false);
-
-            showError("Error fetching weather");
-
-            showError("Unable to fetch weather data. Check your connection.");
- d6b85be6808eebbf4d2214c6a08ecf30bdc35af4
+            showError("Unable to fetch weather data.");
         });
-    
 }
 
+<<<<<<< HEAD
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},IN&appid=${apiKey}&units=metric`;
 
+=======
+function displayCurrentWeather(data) {
+    const { current, location } = data;
+    const temp = isCelsius ? current.temp_c : current.temp_f;
+    const feels = isCelsius ? current.feelslike_c : current.feelslike_f;
+    const wind = isCelsius ? `${current.wind_kph} km/h` : `${current.wind_mph} mph`;
+
+    document.getElementById("city-name").textContent = `${location.name}, ${location.country}`;
+    document.getElementById("weather-condition").textContent = current.condition.text;
+    document.getElementById("weather-icon").src = `https:${current.condition.icon}`;
+    document.getElementById("temp").textContent = `${Math.round(temp)}°${isCelsius ? "C" : "F"}`;
+    document.getElementById("feels-like").textContent = `${Math.round(feels)}°${isCelsius ? "C" : "F"}`;
+    document.getElementById("humidity").textContent = `${current.humidity}%`;
+    document.getElementById("wind").textContent = wind;
+    document.getElementById("wind-dir").textContent = current.wind_dir;
+>>>>>>> fbcdbc2 (update UI and background)
     document.getElementById("current-weather").classList.remove("hidden");
 }
-setDynamicBackground(data);
+
 function displayForecast(days) {
     const container = document.getElementById("forecast-cards");
     container.innerHTML = "";
+<<<<<<< HEAD
 
       document.getElementById("temp").innerText =
         Math.round(data.main.temp) + " °C";
@@ -74,15 +90,37 @@ function displayForecast(days) {
     })
     .catch(() => {
       alert("City not found");
+=======
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    days.forEach((day) => {
+        const date = new Date(`${day.date}T00:00:00`);
+        const dayName = dayNames[date.getDay()];
+        const dateStr = `${date.getDate()} ${date.toLocaleString("default", { month: "short" })}`;
+        const maxTemp = isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f;
+        const minTemp = isCelsius ? day.day.mintemp_c : day.day.mintemp_f;
+
+        const card = document.createElement("div");
+        card.className = "forecast-card";
+        card.innerHTML = `
+            <div class="forecast-day">${dayName}, ${dateStr}</div>
+            <img src="https:${day.day.condition.icon}" alt="${day.day.condition.text}">
+            <div class="forecast-high">${Math.round(maxTemp)}°</div>
+            <div class="forecast-low">${Math.round(minTemp)}°</div>
+            <div class="forecast-condition">${day.day.condition.text}</div>
+        `;
+        container.appendChild(card);
+>>>>>>> fbcdbc2 (update UI and background)
     });
 
     document.getElementById("forecast-section").classList.remove("hidden");
 }
+
 function toggleUnit() {
     isCelsius = !isCelsius;
-    const btn = document.getElementById("unit-toggle");
-    btn.textContent = isCelsius ? "Switch to °F" : "Switch to °C";
-    if (lastWeatherData){
+    document.getElementById("unit-toggle").textContent = isCelsius ? "Switch to °F" : "Switch to °C";
+
+    if (lastWeatherData) {
         displayCurrentWeather(lastWeatherData);
         displayForecast(lastWeatherData.forecast.forecastday);
     }
@@ -106,35 +144,132 @@ function hideResults() {
     document.getElementById("current-weather").classList.add("hidden");
     document.getElementById("forecast-section").classList.add("hidden");
 }
-function setDynamicBackground(data) {
+
+function getCityLocalHour(data) {
+    const localtime = data?.location?.localtime;
+    if (!localtime) return null;
+    const parts = localtime.split(" ");
+    if (parts.length < 2) return null;
+    const hour = Number(parts[1].split(":")[0]);
+    return Number.isNaN(hour) ? null : hour;
+}
+
+function getBackgroundFile(data) {
     const condition = data.current.condition.text.toLowerCase();
-    const isDay = data.current.is_day;
+    const localHour = getCityLocalHour(data);
+    const isDayByLocalTime = localHour !== null ? localHour >= 6 && localHour < 18 : data.current.is_day === 1;
 
-    let bgImage = "";
-
-    if (condition.includes("rain")) {
-        bgImage = "url('https://images.unsplash.com/photo-1501696461415-6bd6660c6742')";
-    } 
-    else if (condition.includes("cloud")) {
-        bgImage = "url('https://images.unsplash.com/photo-1501630834273-4b5604d2ee31')";
-    } 
-    else if (condition.includes("clear") && isDay) {
-        bgImage = "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9')";
-    } 
-    else if (condition.includes("clear") && !isDay) {
-        bgImage = "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee')";
-    } 
-    else if (!isDay) {
-        bgImage = "url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429')";
-    } 
-    else {
-        bgImage = "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')";
+    if (condition.includes("rain") || condition.includes("drizzle") || condition.includes("thunder")) {
+        isRaining = true;
+        return "videos/rain.mp4";
     }
 
-    document.body.style.background = `
-        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
-        ${bgImage}
-    `;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
+    isRaining = false;
+    if (condition.includes("cloud") || condition.includes("overcast") || condition.includes("mist")) {
+        return "videos/clouds.mp4";
+    }
+
+    return isDayByLocalTime ? "videos/clear.mp4" : "videos/night.mp4";
 }
+
+function applyFrontTheme(data) {
+    const condition = data.current.condition.text.toLowerCase();
+    const localHour = getCityLocalHour(data);
+    const isDayByLocalTime = localHour !== null ? localHour >= 6 && localHour < 18 : data.current.is_day === 1;
+
+    document.body.classList.remove("theme-day", "theme-night", "theme-rain", "theme-cloud");
+
+    if (condition.includes("rain") || condition.includes("drizzle") || condition.includes("thunder")) {
+        document.body.classList.add("theme-rain");
+        return;
+    }
+
+    if (condition.includes("cloud") || condition.includes("overcast") || condition.includes("mist")) {
+        document.body.classList.add("theme-cloud");
+        return;
+    }
+
+    document.body.classList.add(isDayByLocalTime ? "theme-day" : "theme-night");
+}
+
+function setDynamicBackground(data) {
+    applyFrontTheme(data);
+
+    const nextFile = getBackgroundFile(data);
+    if (nextFile === currentBackgroundFile) return;
+
+    const currentVideo = bgVideos[activeVideoIndex];
+    const nextVideo = bgVideos[1 - activeVideoIndex];
+
+    nextVideo.src = nextFile;
+    nextVideo.load();
+    nextVideo.play().catch(() => {});
+
+    nextVideo.classList.add("active");
+    currentVideo.classList.remove("active");
+
+    activeVideoIndex = 1 - activeVideoIndex;
+    currentBackgroundFile = nextFile;
+}
+
+class RainDrop {
+    constructor() {
+        this.reset(true);
+    }
+
+    reset(initial = false) {
+        this.x = Math.random() * canvasFX.width;
+        this.y = initial ? Math.random() * canvasFX.height : -20;
+        this.length = Math.random() * 20 + 10;
+        this.speed = Math.random() * 7 + 8;
+    }
+
+    update() {
+        this.y += this.speed;
+        if (this.y > canvasFX.height) {
+            this.reset();
+        }
+    }
+
+    draw() {
+        ctxFX.strokeStyle = "rgba(255,255,255,0.35)";
+        ctxFX.lineWidth = 1.2;
+        ctxFX.beginPath();
+        ctxFX.moveTo(this.x, this.y);
+        ctxFX.lineTo(this.x - 2, this.y + this.length);
+        ctxFX.stroke();
+    }
+}
+
+function initRain() {
+    rainDrops = Array.from({ length: 170 }, () => new RainDrop());
+}
+
+function animateEffects() {
+    ctxFX.clearRect(0, 0, canvasFX.width, canvasFX.height);
+
+    if (isRaining) {
+        rainDrops.forEach((drop) => {
+            drop.update();
+            drop.draw();
+        });
+    }
+    requestAnimationFrame(animateEffects);
+}
+
+function resizeEffects() {
+    canvasFX.width = window.innerWidth;
+    canvasFX.height = window.innerHeight;
+}
+
+resizeEffects();
+initRain();
+animateEffects();
+window.addEventListener("resize", resizeEffects);
+
+bgVideos.forEach((video) => {
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.play().catch(() => {});
+});
