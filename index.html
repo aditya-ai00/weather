@@ -4,8 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Weather Dashboard</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -13,17 +16,31 @@
 <h1>Weather Dashboard</h1>
 
 <div class="search-box">
-<input type="text" id="city" placeholder="Enter city name">
+
+<input
+type="text"
+id="city"
+placeholder="Enter city name"
+/>
+
 <button onclick="getWeather()">Search</button>
+
 </div>
 
 <div id="weather-card">
+
 <h2 id="name">City</h2>
+
 <p id="temp">-- °C</p>
+
 <p id="condition"></p>
+
+<img id="icon" alt="">
+
 </div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
