@@ -35,3 +35,10 @@ function getWeather() {
     });
 
 }
+// Function to trigger weather search when the Enter key is pressed
+document.getElementById("city").addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault(); // Prevents the default action (like form submission)
+    getWeather(); // Calls your existing function to fetch weather data
+  }
+});
