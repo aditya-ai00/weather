@@ -11,27 +11,39 @@ function getWeather() {
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},IN&appid=${apiKey}&units=metric`;
 
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("City not found");
-      }
-      return response.json();
-    })
-    .then(data => {
+ fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("City not found");
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Name aur Temp update 
+            document.getElementById("name").innerText = data.name + ", " + data.sys.country;
+            document.getElementById("temp").innerText = Math.round(data.main.temp) + " °C";
 
-      document.getElementById("name").innerText =
-        data.name + ", " + data.sys.country;
+           // --- Dynamic Weather Icon Mapping ---
+            const condition = data.weather[0].main.toLowerCase();
+            const weatherIconElement = document.getElementById("weather-icon");
 
-      document.getElementById("temp").innerText =
-        Math.round(data.main.temp) + " °C";
+            const iconMap = {
+                "clear": "☀️",
+                "clouds": "☁️",
+                "rain": "🌧️",
+                "drizzle": "🌦️",
+                "thunderstorm": "⛈️",
+                "snow": "❄️",
+                "mist": "🌫️",
+                "smoke": "💨",
+                "haze": "🌫️"
+            };
 
-      document.getElementById("condition").innerText =
-        data.weather[0].description;
-
-    })
-    .catch(() => {
-      alert("City not found");
-    });
-
-}
+            // Icon update
+            if (weatherIconElement) {
+                weatherIconElement.innerText = iconMap[condition] || "🌡️";
+            }
+        })
+        .catch(err => {
+            alert(err.message);
+        });
