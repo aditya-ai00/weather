@@ -1,37 +1,87 @@
-body{
-font-family: Arial, sans-serif;
-text-align:center;
-background: linear-gradient(135deg,#667eea,#764ba2);
-color:white;
-margin-top:80px;
+/* General Setup */
+body {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Deep Blue Gradient */
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  color: white;
 }
 
-h1{
-margin-bottom:40px;
+/* Glassmorphism Container */
+.container {
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 40px;
+  width: 400px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
 }
 
-.search-box input{
-padding:10px;
-width:200px;
-border:none;
-border-radius:5px;
+/* Search Box Styling */
+.search-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
-.search-box button{
-padding:10px 20px;
-margin-left:10px;
-border:none;
-border-radius:5px;
-background:#ff6b6b;
-color:white;
-cursor:pointer;
+input#city {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.9);
 }
 
-#weather-card{
-margin-top:40px;
+button {
+  padding: 12px 25px;
+  border-radius: 30px;
+  border: none;
+  background: #ff6b6b;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
-#temp{
-font-size:40px;
-margin-top:10px;
+button:hover {
+  background: #ee5253;
+  transform: translateY(-2px);
+}
+
+/* Weather Info Styling */
+.weather-info h2 {
+  font-size: 3rem;
+  margin: 10px 0;
+}
+
+.weather-info p {
+  font-size: 1.2rem;
+  text-transform: capitalize;
+}
+
+/* Issue #34: Mobile Responsiveness Fix */
+@media (max-width: 480px) {
+  .container {
+    width: 85%;
+    padding: 20px;
+  }
+
+  .search-box {
+    flex-direction: column; /* Stacks input and button on mobile */
+  }
+
+  input#city, button {
+    width: 100%;
+  }
+
+  .weather-info h2 {
+    font-size: 2rem;
+  }
 }
