@@ -2,7 +2,6 @@ body{
 
 font-family:Arial;
 text-align:center;
-
 background:linear-gradient(135deg,#667eea,#764ba2);
 
 color:white;
@@ -89,4 +88,77 @@ outline:none;
 
 box-shadow:0 0 8px rgba(255,255,255,0.6);
 
+}
+
+
+
+
+/* 🌡️ UNIT TOGGLE BUTTON (CLEAN STYLE) */
+#unit-toggle {
+  margin-top: 20px;
+  padding: 10px 18px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT */
+#unit-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ACTIVE CLICK EFFECT */
+#unit-toggle:active {
+  transform: scale(0.97);
+}
+
+
+/* 🌙 DARK MODE */
+
+/* Body background */
+body.dark-mode {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Input field */
+body.dark-mode input {
+  background: #111;
+  color: #fff;
+}
+
+/* Search button */
+body.dark-mode .search-box button {
+  background: #333;
+  color: #fff;
+}
+
+/* Toggle button style */
+#theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  background: #ffffff;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Toggle button in dark mode */
+body.dark-mode #theme-toggle {
+  background: #222;
+  color: #fff;
+}
+
+/* 🌙 FORCE DARK MODE */
+body.dark-mode {
+  background: #000000 !important;
+  color: #ffffff !important;
 }

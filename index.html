@@ -13,29 +13,34 @@
 
 <body>
 
+<button id="theme-toggle">🌙 Dark Mode</button>
+
 <h1>Weather Dashboard</h1>
 
 <div class="search-box">
 
-<input
-type="text"
-id="city"
-placeholder="Enter city name"
-/>
+  <input
+    type="text"
+    id="city"
+    placeholder="Enter city name"
+  />
 
-<button onclick="getWeather()">Search</button>
+  <button onclick="getWeather()">Search</button>
 
 </div>
 
+<!-- ✅ Unit Toggle Button -->
+<button id="unit-toggle">Switch to °F</button>
+
 <div id="weather-card">
 
-<h2 id="name">City</h2>
+  <h2 id="name">City</h2>
 
-<p id="temp">-- °C</p>
+  <p id="temp">-- °C</p>
 
-<p id="condition"></p>
+  <p id="condition"></p>
 
-<img id="icon" alt="">
+  <img id="icon" alt="">
 
 </div>
 
