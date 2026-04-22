@@ -1,5 +1,7 @@
 const apiKey = "";
 
+let currentUnit = "C"; // default
+let currentData = null; // store latest weather
 
 function getWeather() {
 
@@ -32,23 +34,29 @@ alert("Failed to fetch weather data");
 }
 
 
-
 function updateWeather(data){
 
-document.getElementById("name").innerText =
-data.location.name + ", " + data.location.country;
+  currentData = data; // store data
 
-document.getElementById("temp").innerText =
-Math.round(data.current.temp_c) + " °C";
+  document.getElementById("name").innerText =
+    data.location.name + ", " + data.location.country;
 
-document.getElementById("condition").innerText =
-data.current.condition.text;
+  let temp;
 
-document.getElementById("icon").src =
-"https:" + data.current.condition.icon;
+  if(currentUnit === "C"){
+    temp = Math.round(data.current.temp_c) + " °C";
+  } else {
+    temp = Math.round(data.current.temp_f) + " °F";
+  }
 
+  document.getElementById("temp").innerText = temp;
+
+  document.getElementById("condition").innerText =
+    data.current.condition.text;
+
+  document.getElementById("icon").src =
+    "https:" + data.current.condition.icon;
 }
-
 
 
 document.getElementById("city").addEventListener("keypress", function(e){
