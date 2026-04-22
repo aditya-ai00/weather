@@ -6,7 +6,7 @@ let currentData = null; // store latest weather
 // 🔹 GET WEATHER FUNCTION
 function getWeather() {
   const city = document.getElementById("city").value.trim();
-
+// fix: added default country handling
   if (!city) {
     alert("Please enter a city name");
     return;
