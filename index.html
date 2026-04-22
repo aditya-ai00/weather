@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<<<<<<< improve-UI
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Weather Dashboard</title>
 
     <link rel="stylesheet" href="style.css">
+=======
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+>>>>>>> main
 
 </head>
 
 <body>
 
+<<<<<<< improve-UI
     <h1>Weather Dashboard</h1>
+=======
+<button id="theme-toggle">🌙 Dark Mode</button>
+
+<h1>Weather Dashboard</h1>
+>>>>>>> main
 
     <div class="search-box">
         <input type="text" id="city" placeholder="Enter city name" />
         <button onclick="getWeather()">Search</button>
     </div>
 
+<<<<<<< improve-UI
     <div id="weather-card">
         <h2 id="name"></h2>
         <p id="temp"></p>
@@ -30,6 +46,34 @@
 
     <script src="config.example.js"></script>
     <script src="script.js"></script>
+=======
+  <input
+    type="text"
+    id="city"
+    placeholder="Enter city name"
+  />
+
+  <button onclick="getWeather()">Search</button>
+
+</div>
+
+<!-- ✅ Unit Toggle Button -->
+<button id="unit-toggle">Switch to °F</button>
+
+<div id="weather-card">
+
+  <h2 id="name">City</h2>
+
+  <p id="temp">-- °C</p>
+
+  <p id="condition"></p>
+
+  <img id="icon" alt="">
+
+</div>
+
+<script src="script.js"></script>
+>>>>>>> main
 
 </body>
 
