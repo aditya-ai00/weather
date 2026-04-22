@@ -7,6 +7,8 @@ background:linear-gradient(135deg,#667eea,#764ba2);
 color:white;
 
 margin-top:80px;
+padding:0 16px;
+}
 
 }
 
@@ -77,88 +79,68 @@ margin-top:10px;
 width:80px;
 
 margin-top:10px;
-
+margin-bottom:12px;
 }
 
-
-
-input:focus{
-
-outline:none;
-
-box-shadow:0 0 8px rgba(255,255,255,0.6);
-
+#condition-row{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+min-height:64px;
+flex-wrap:wrap;
 }
 
-
-
-
-/* 🌡️ UNIT TOGGLE BUTTON (CLEAN STYLE) */
-#unit-toggle {
-  margin-top: 20px;
-  padding: 10px 18px;
-  border-radius: 25px;
-  border: none;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  color: #333;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
+#weather-icon{
+width:64px;
+height:64px;
+object-fit:contain;
+filter:drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+transition:opacity 0.2s ease, transform 0.2s ease;
 }
 
-/* HOVER EFFECT */
-#unit-toggle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+#weather-icon.is-loading{
+opacity:0.6;
+transform:scale(0.96);
 }
 
-/* ACTIVE CLICK EFFECT */
-#unit-toggle:active {
-  transform: scale(0.97);
+#condition{
+margin:0;
+font-size:20px;
+text-transform:capitalize;
 }
 
-
-/* 🌙 DARK MODE */
-
-/* Body background */
-body.dark-mode {
-  background: #000000;
-  color: #ffffff;
+@media (max-width: 480px){
+body{
+margin-top:48px;
 }
 
-/* Input field */
-body.dark-mode input {
-  background: #111;
-  color: #fff;
+.search-box{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:12px;
 }
 
-/* Search button */
-body.dark-mode .search-box button {
-  background: #333;
-  color: #fff;
+.search-box input{
+width:min(100%,280px);
 }
 
-/* Toggle button style */
-#theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 8px 14px;
-  border-radius: 20px;
-  border: none;
-  background: #ffffff;
-  color: #000;
-  cursor: pointer;
+.search-box button{
+margin-left:0;
+width:min(100%,280px);
 }
 
-/* Toggle button in dark mode */
-body.dark-mode #theme-toggle {
-  background: #222;
-  color: #fff;
+#condition-row{
+gap:8px;
 }
 
-/* 🌙 FORCE DARK MODE */
-body.dark-mode {
-  background: #000000 !important;
-  color: #ffffff !important;
+#weather-icon{
+width:56px;
+height:56px;
+}
+
+#condition{
+font-size:18px;
+}
 }

@@ -1,80 +1,60 @@
-const apiKey = "f0133e94263d448c963164120261904";
+const apiKey = "3a4dc2581af7beaa310a4dbc43bd8d2c";
+const defaultWeatherIcon = "https://openweathermap.org/img/wn/01d@2x.png";
 
-let currentUnit = "C"; // default
-let currentData = null; // store latest weather
-
-function getWeather() {
-
-const city = document.getElementById("city").value.trim();
-
-if (!city) {
-alert("Please enter a city name");
-return;
+function getWeatherIconUrl(iconCode) {
+  return iconCode
+    ? `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+    : defaultWeatherIcon;
 }
 
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}`;
+function updateWeatherIcon(weather = {}) {
+  const weatherIcon = document.getElementById("weather-icon");
+  const iconUrl = getWeatherIconUrl(weather.icon);
+  const description = weather.description || "Weather condition unavailable";
 
-fetch(url)
-.then(res => res.json())
-.then(data => {
-
-if (data.error) {
-alert(data.error.message);
-return;
-}
-
-updateWeather(data);
-
-})
-.catch(() => {
-alert("Failed to fetch weather data");
-});
-
-}
-
-
-function updateWeather(data){
-
-  currentData = data; // store data
-
-  document.getElementById("name").innerText =
-    data.location.name + ", " + data.location.country;
-
-  let temp;
-
-  if(currentUnit === "C"){
-    temp = Math.round(data.current.temp_c) + " °C";
-  } else {
-    temp = Math.round(data.current.temp_f) + " °F";
+  if (!weatherIcon) {
+    return;
   }
 
-  document.getElementById("temp").innerText = temp;
+  // Reveal the icon after it loads and fall back to a default if the API icon is missing.
+  weatherIcon.hidden = true;
+  weatherIcon.classList.add("is-loading");
+  weatherIcon.alt = description;
+  weatherIcon.title = description;
+  weatherIcon.onerror = () => {
+    if (weatherIcon.dataset.fallbackApplied === "true") {
+      weatherIcon.hidden = false;
+      weatherIcon.classList.remove("is-loading");
+      return;
+    }
 
-  document.getElementById("condition").innerText =
-    data.current.condition.text;
-
-  document.getElementById("icon").src =
-    "https:" + data.current.condition.icon;
+    weatherIcon.dataset.fallbackApplied = "true";
+    weatherIcon.src = defaultWeatherIcon;
+  };
+  weatherIcon.onload = () => {
+    weatherIcon.hidden = false;
+    weatherIcon.classList.remove("is-loading");
+  };
+  weatherIcon.dataset.fallbackApplied = iconUrl === defaultWeatherIcon ? "true" : "false";
+  weatherIcon.src = iconUrl;
 }
 
-
-document.getElementById("city").addEventListener("keypress", function(e){
-
-if(e.key === "Enter"){
-getWeather();
-}
-
-});
-
-
+function getWeather() {
+  const city = document.getElementById("city").value.trim();
 
 navigator.geolocation.getCurrentPosition(showPosition);
 
 function showPosition(position){
 
-const lat = position.coords.latitude;
-const lon = position.coords.longitude;
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("City not found");
+      }
+      return response.json();
+    })
+    .then(data => {
+      const currentWeather = data.weather && data.weather[0] ? data.weather[0] : {};
 
 const url =
 `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
@@ -83,49 +63,12 @@ fetch(url)
 .then(res => res.json())
 .then(data => {
 
-updateWeather(data);
+      document.getElementById("condition").innerText =
+        currentWeather.description || "Weather condition unavailable";
 
-});
-
+      updateWeatherIcon(currentWeather);
+    })
+    .catch(() => {
+      alert("City not found");
+    });
 }
-
-
-document.getElementById("unit-toggle").addEventListener("click", function(){
-
-  if(!currentData) return; // no data yet
-
-  if(currentUnit === "C"){
-    currentUnit = "F";
-    this.innerText = "Switch to °C";
-  } else {
-    currentUnit = "C";
-    this.innerText = "Switch to °F";
-  }
-
-  updateWeather(currentData); // refresh display
-});
-
-
-
-// 🌙 DARK MODE TOGGLE
-const themeBtn = document.getElementById("theme-toggle");
-
-// Load saved theme (optional but recommended)
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark-mode");
-  themeBtn.innerText = "☀️ Light Mode";
-}
-
-// Toggle on click
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-
-  if (document.body.classList.contains("dark-mode")) {
-    themeBtn.innerText = "☀️ Light Mode";
-    localStorage.setItem("theme", "dark");
-  } else {
-    themeBtn.innerText = "🌙 Dark Mode";
-    localStorage.setItem("theme", "light");
-  }
-});
-

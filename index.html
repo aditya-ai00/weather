@@ -34,18 +34,22 @@
 
 <div id="weather-card">
 
-  <h2 id="name">City</h2>
-
-  <p id="temp">-- °C</p>
-
-  <p id="condition"></p>
-
-  <img id="icon" alt="">
-
+<h2 id="name">City</h2>
+<p id="temp">-- &deg;C</p>
+<div id="condition-row">
+<img
+id="weather-icon"
+src="https://openweathermap.org/img/wn/01d@2x.png"
+alt="Weather icon"
+title="Weather icon"
+loading="lazy"
+hidden
+>
+<p id="condition">Search for a city to view the current weather.</p>
+</div>
 </div>
 
 <script src="script.js"></script>
 
 </body>
-
 </html>
