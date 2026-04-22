@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
 
-<title>Weather Dashboard</title>
-
-<link rel="stylesheet" href="style.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
+<button id="theme-toggle">🌙 Dark Mode</button>
+
 <h1>Weather Dashboard</h1>
 
 <div class="search-box">
 
-<input
-type="text"
-id="city"
-placeholder="Enter city name"
-/>
+  <input
+    type="text"
+    id="city"
+    placeholder="Enter city name"
+  />
 
-<button onclick="getWeather()">Search</button>
+  <button onclick="getWeather()">Search</button>
 
 </div>
+
+<!-- ✅ Unit Toggle Button -->
+<button id="unit-toggle">Switch to °F</button>
 
 <div id="weather-card">
 
