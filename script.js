@@ -1,4 +1,5 @@
-const apiKey = "YOUR_API_KEY_HERE";
+const apiKey = "";
+// Note: Add your own API key from weatherapi.com to test locally
 
 let currentUnit = "C"; // default
 let currentData = null; // store latest weather
