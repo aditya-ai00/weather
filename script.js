@@ -1,4 +1,4 @@
-const apiKey = "YOUR_API_KEY_HERE";
+const apiKey = "YOU_API_KEY_HERE";
 
 let searchedCity = null; // track last searched city
 let isCelsius = true;

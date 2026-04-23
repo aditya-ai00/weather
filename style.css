@@ -370,7 +370,3 @@ body {
     color: white;
     cursor: pointer;
 }
-.clear-btn:hover {
-    background: #ee5a5a;
-    transform: scale(1.05);
-}
