@@ -1,131 +1,132 @@
-const apiKey = "f0133e94263d448c963164120261904";
-
-let currentUnit = "C"; // default
-let currentData = null; // store latest weather
+const apiKey = "YOUR_API_KEY_HERE";
+let isCelsius = true; //toggle state
+let lastWeatherData = null;
 
 function getWeather() {
+    const city = document.getElementById("city").value.trim();
+    if (city === "") {
+        showError("Please enter a city name.");
+        return;
+    }
 
-const city = document.getElementById("city").value.trim();
+    // Show loader, hide previous results and errors
+    showLoader(true);
+    hideResults();
+    hideError();
 
-if (!city) {
-alert("Please enter a city name");
-return;
+    const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=5`;
+
+    fetch(url)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Network error");
+            }
+            return res.json();
+        })
+        .then(data => {
+            showLoader(false);
+            if (data.error) {
+                showError("City not found. Please try again.");
+                return;
+            }
+            lastWeatherData = data;
+            displayCurrentWeather(data);
+            displayForecast(data.forecast.forecastday);
+        })
+        .catch(() => {
+            showLoader(false);
+            showError("Unable to fetch weather data. Check your connection.");
+        });
 }
 
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}`;
+function displayCurrentWeather(data) {
+    const current = data.current;
+    const location = data.location;
+    const temp = isCelsius ? current.temp_c : current.temp_f;
+    const feels = isCelsius ? current.feelslike_c : current.feelslike_f;
+    const wind = isCelsius ? `${current.wind_kph} km/h` : `${current.wind_mph} mph`;
 
-fetch(url)
-.then(res => res.json())
-.then(data => {
+    document.getElementById("city-name").textContent = `${location.name}, ${location.country}`;
+    document.getElementById("weather-condition").textContent = current.condition.text;
+    document.getElementById("weather-icon").src = `https:${current.condition.icon}`;
+    document.getElementById("temp").textContent = `${Math.round(temp)}°${isCelsius ? "C" : "F"}`;
+    document.getElementById("feels-like").textContent = `${Math.round(feels)}°${isCelsius ? "C" : "F"}`;
+    document.getElementById("humidity").textContent = `${current.humidity}%`;
+    document.getElementById("wind").textContent = wind;
+    document.getElementById("wind-dir").textContent = current.wind_dir;
 
-if (data.error) {
-alert(data.error.message);
-return;
+    document.getElementById("current-weather").classList.remove("hidden");
 }
 
-updateWeather(data);
+function displayForecast(days) {
+    const container = document.getElementById("forecast-cards");
+    container.innerHTML = "";
 
-})
-.catch(() => {
-alert("Failed to fetch weather data");
-});
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+    days.forEach(day => {
+        const date = new Date(day.date + "T00:00:00");
+        const dayName = dayNames[date.getDay()];
+        const dateStr = `${date.getDate()} ${date.toLocaleString("default", { month: "short" })}`;
+
+        const card = document.createElement("div");
+        card.className = "forecast-card";
+
+        const maxTemp = isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f;
+        const minTemp = isCelsius ? day.day.mintemp_c : day.day.mintemp_f;
+
+        card.innerHTML = `
+            <div class="forecast-day">${dayName}, ${dateStr}</div>
+            <img src="https:${day.day.condition.icon}" alt="${day.day.condition.text}">
+            <div class="forecast-high">${Math.round(maxTemp)}°</div>
+            <div class="forecast-low">${Math.round(minTemp)}°</div>
+            <div class="forecast-condition">${day.day.condition.text}</div>
+        `;
+        container.appendChild(card);
+    });
+
+    document.getElementById("forecast-section").classList.remove("hidden");
 }
 
+function toggleUnit() {
+    isCelsius = !isCelsius;
+    const btn = document.getElementById("unit-toggle");
+    btn.textContent = isCelsius ? "Switch to °F" : "Switch to °C";
 
-function updateWeather(data){
-
-  currentData = data; // store data
-
-  document.getElementById("name").innerText =
-    data.location.name + ", " + data.location.country;
-
-  let temp;
-
-  if(currentUnit === "C"){
-    temp = Math.round(data.current.temp_c) + " °C";
-  } else {
-    temp = Math.round(data.current.temp_f) + " °F";
-  }
-
-  document.getElementById("temp").innerText = temp;
-
-  document.getElementById("condition").innerText =
-    data.current.condition.text;
-
-  document.getElementById("icon").src =
-    "https:" + data.current.condition.icon;
+    if (lastWeatherData) {
+        displayCurrentWeather(lastWeatherData);
+        displayForecast(lastWeatherData.forecast.forecastday);
+    }
 }
 
-
-document.getElementById("city").addEventListener("keypress", function(e){
-
-if(e.key === "Enter"){
-getWeather();
+function showLoader(show) {
+    document.getElementById("loader").classList.toggle("hidden", !show);
 }
 
-});
-
-
-
-navigator.geolocation.getCurrentPosition(showPosition);
-
-function showPosition(position){
-
-const lat = position.coords.latitude;
-const lon = position.coords.longitude;
-
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
-
-fetch(url)
-.then(res => res.json())
-.then(data => {
-
-updateWeather(data);
-
-});
-
+function showError(message) {
+    const el = document.getElementById("error-msg");
+    el.textContent = message;
+    el.classList.remove("hidden");
 }
 
-
-document.getElementById("unit-toggle").addEventListener("click", function(){
-
-  if(!currentData) return; // no data yet
-
-  if(currentUnit === "C"){
-    currentUnit = "F";
-    this.innerText = "Switch to °C";
-  } else {
-    currentUnit = "C";
-    this.innerText = "Switch to °F";
-  }
-
-  updateWeather(currentData); // refresh display
-});
-
-
-
-// 🌙 DARK MODE TOGGLE
-const themeBtn = document.getElementById("theme-toggle");
-
-// Load saved theme (optional but recommended)
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark-mode");
-  themeBtn.innerText = "☀️ Light Mode";
+function hideError() {
+    document.getElementById("error-msg").classList.add("hidden");
 }
 
-// Toggle on click
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
+function hideResults() {
+    document.getElementById("current-weather").classList.add("hidden");
+    document.getElementById("forecast-section").classList.add("hidden");
+}
 
-  if (document.body.classList.contains("dark-mode")) {
-    themeBtn.innerText = "☀️ Light Mode";
-    localStorage.setItem("theme", "dark");
-  } else {
-    themeBtn.innerText = "🌙 Dark Mode";
-    localStorage.setItem("theme", "light");
-  }
-});
+function clearAll() {
+    document.getElementById("city").value = "";
+    hideResults();
+    hideError();
+    lastWeatherData = null;
+    isCelsius = true;
+    document.getElementById("unit-toggle").textContent = "Toggle Units";
 
+    document.getElementById("city-name").textContent = "";
+    document.getElementById("forecast-cards").innerHTML = "";
+    document.getElementById("city").focus();
+}
