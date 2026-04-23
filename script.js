@@ -58,6 +58,25 @@ function updateWeather(data){
     "https:" + data.current.condition.icon;
 }
 
+// Dynamic weather icon mapping
+const condition = data.current.condition.text.toLowerCase();
+let weatherEmoji = "🌤️";
+if (condition.includes("sunny") || condition.includes("clear")) {
+  weatherEmoji = "☀️";
+} else if (condition.includes("cloud") || condition.includes("overcast")) {
+  weatherEmoji = "☁️";
+} else if (condition.includes("rain") || condition.includes("drizzle")) {
+  weatherEmoji = "🌧️";
+} else if (condition.includes("snow") || condition.includes("blizzard")) {
+  weatherEmoji = "❄️";
+} else if (condition.includes("thunder") || condition.includes("storm")) {
+  weatherEmoji = "⛈️";
+} else if (condition.includes("fog") || condition.includes("mist")) {
+  weatherEmoji = "🌫️";
+} else if (condition.includes("wind")) {
+  weatherEmoji = "💨";
+}
+document.getElementById("weather-emoji").innerText = weatherEmoji;
 
 document.getElementById("city").addEventListener("keypress", function(e){
 
@@ -66,7 +85,6 @@ getWeather();
 }
 
 });
-
 
 
 navigator.geolocation.getCurrentPosition(showPosition);
