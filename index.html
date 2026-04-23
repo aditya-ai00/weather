@@ -1,51 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather Dashboard</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-layout">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+      <!-- LEFT: MAIN APP -->
+      <div class="container main-content">
+        <h1 class="app-title">Weather Dashboard</h1>
 
-</head>
+        <!-- Search Bar -->
+        <div class="search-box">
+          <input
+            type="text"
+            id="city"
+            placeholder="Enter city name"
+            onkeydown="if (event.key === 'Enter') getWeather();"
+          />
+          <button onclick="getWeather()">Search</button>
+          <button id="unit-toggle" onclick="toggleUnit()">Toggle Units</button>
+          <button id="clear-all" onclick="ClearAll()">Clear All</button>
+        </div>
 
-<body>
+        <!-- Loader -->
+        <div id="loader" class="loader hidden"></div>
 
-<button id="theme-toggle">🌙 Dark Mode</button>
+        <!-- Error -->
+        <p id="error-msg" class="error-msg hidden"></p>
 
-<h1>Weather Dashboard</h1>
+        <!-- Current Weather -->
+        <div id="current-weather" class="current-weather hidden">
+          <div class="current-main">
+            <div>
+              <h2 id="city-name"></h2>
+              <p id="weather-condition" class="condition"></p>
+            </div>
+            <img id="weather-icon" class="weather-icon" />
+          </div>
 
-<div class="search-box">
+          <div class="current-temp">
+            <span id="temp"></span>
+          </div>
 
-  <input
-    type="text"
-    id="city"
-    placeholder="Enter city name"
-  />
+          <div class="current-details">
+            <div class="detail-item">
+              <span class="detail-label">Feels Like</span>
+              <span id="feels-like"></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Humidity</span>
+              <span id="humidity"></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Wind</span>
+              <span id="wind"></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Wind Dir</span>
+              <span id="wind-dir"></span>
+            </div>
+          </div>
+        </div>
 
-  <button onclick="getWeather()">Search</button>
+        <div id="forecast-section" class="forecast-section hidden">
+          <h2 class="forecast-title">5-Day Forecast</h2>
+          <div id="forecast-cards" class="forecast-cards"></div>
+        </div>
+      </div>
+      <div class="history-panel">
+        <h3>History</h3>
+        <div id="history-list" class="history-list"></div>
+        <button class="clear-btn" onclick="clearHistory()">Clear</button>
+      </div>
 
-</div>
+    </div>
 
-<!-- ✅ Unit Toggle Button -->
-<button id="unit-toggle">Switch to °F</button>
-
-<div id="weather-card">
-
-  <h2 id="name">City</h2>
-
-  <p id="temp">-- °C</p>
-
-  <p id="condition"></p>
-
-  <img id="icon" alt="">
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
