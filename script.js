@@ -68,8 +68,9 @@ getWeather();
 
 });
 
-if(apiKey){
-  navigator.geolocation.getCurrentPosition(showPosition);
+
+if (apiKey) {
+    navigator.geolocation.getCurrentPosition(showPosition);
 }
 
 function showPosition(position){
@@ -81,13 +82,13 @@ const url =
 `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
 
 fetch(url)
-.then(res => res.json())
-.then(data => {
-
-updateWeather(data);
-
-});
-
+        .then(res => res.json())
+        .then(data => {
+            if (!data.error) {
+                updateWeather(data);
+            }
+        })
+        .catch(err => console.error("Geolocation weather fetch failed:", err));
 }
 
 
@@ -127,6 +128,57 @@ themeBtn.addEventListener("click", () => {
   } else {
     themeBtn.innerText = "🌙 Dark Mode";
     localStorage.setItem("theme", "light");
+  }
+});
+
+// 🔍 CITY AUTOCOMPLETE FEATURE
+
+const cityInput = document.getElementById("city");
+
+// dropdown element create karo
+const dropdown = document.createElement("ul");
+dropdown.classList.add("dropdown");
+cityInput.parentNode.appendChild(dropdown);
+
+// input change hone par suggestions lao
+cityInput.addEventListener("input", async function () {
+  if (!apiKey) return;
+  const query = this.value.trim();
+
+  if (query.length < 2) {
+    dropdown.innerHTML = "";
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${query}`
+    );
+    const data = await res.json();
+
+    dropdown.innerHTML = "";
+
+    data.forEach((city) => {
+      const li = document.createElement("li");
+      li.innerText = `${city.name}, ${city.country}`;
+
+      li.addEventListener("click", () => {
+        cityInput.value = city.name + ", " + city.country;
+        dropdown.innerHTML = "";
+        getWeather(); // auto search
+      });
+
+      dropdown.appendChild(li);
+    });
+
+  } catch (err) {
+    console.error("Autocomplete error:", err);
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (!cityInput.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.innerHTML = "";
   }
 });
 
