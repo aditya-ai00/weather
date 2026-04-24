@@ -1,208 +1,326 @@
-body{
-
-font-family:Arial;
-text-align:center;
-background:linear-gradient(135deg,#667eea,#764ba2);
-
-color:white;
-
-margin-top:80px;
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
-
-.search-box input{
-
-padding:10px;
-
-width:230px;
-
-border:none;
-
-border-radius:6px;
-
+:root {
+  --bg-primary: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fefeff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --border: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
 }
 
-
-
-.search-box button{
-
-padding:10px 18px;
-
-margin-left:10px;
-
-border:none;
-
-border-radius:6px;
-
-background:#ff6b6b;
-
-color:white;
-
-cursor:pointer;
-
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
-
-
-.search-box button:hover{
-
-background:#ff4d4d;
-
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
-
-
-#weather-card{
-
-margin-top:40px;
-
+.container {
+  width: 100%;
+  max-width: 420px;
 }
 
-
-
-#temp{
-
-font-size:40px;
-
-margin-top:10px;
-
+header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 32px;
 }
 
-
-
-#icon{
-
-width:80px;
-
-margin-top:10px;
-
-}
-
-
-
-input:focus{
-
-outline:none;
-
-box-shadow:0 0 8px rgba(255,255,255,0.6);
-
-}
-
-
-
-
-/* 🌡️ UNIT TOGGLE BUTTON (CLEAN STYLE) */
-#unit-toggle {
-  margin-top: 20px;
-  padding: 10px 18px;
-  border-radius: 25px;
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   border: none;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  color: #333;
-  font-weight: bold;
+  background: var(--bg-card);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
 }
 
-/* HOVER EFFECT */
-#unit-toggle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+.icon-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
-/* ACTIVE CLICK EFFECT */
-#unit-toggle:active {
-  transform: scale(0.97);
+.sun-icon { display: block; }
+.moon-icon { display: none; }
+
+body.dark-mode .sun-icon { display: none; }
+body.dark-mode .moon-icon { display: block; }
+
+.search-wrapper {
+  margin-bottom: 24px;
 }
 
-
-/* 🌙 DARK MODE */
-
-/* Body background */
-body.dark-mode {
-  background: #000000;
-  color: #ffffff;
+.search-box {
+  display: flex;
+  gap: 10px;
+  background: var(--bg-card);
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
-/* Input field */
-body.dark-mode input {
-  background: #111;
-  color: #fff;
+.search-box input {
+  flex: 1;
+  padding: 14px 18px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-primary);
+  outline: none;
 }
 
-/* Search button */
-body.dark-mode .search-box button {
-  background: #333;
-  color: #fff;
+.search-box input::placeholder {
+  color: var(--text-muted);
 }
 
-/* Toggle button style */
-#theme-toggle {
+.search-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.search-btn:hover {
+  background: var(--accent-hover);
+  transform: scale(1.02);
+}
+
+.weather-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s ease;
+}
+
+.weather-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.location svg {
+  color: var(--text-muted);
+}
+
+.location h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.temp-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+#temp {
+  font-family: var(--font-display);
+  font-size: 80px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-primary);
+  letter-spacing: -3px;
+}
+
+.unit {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.condition {
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.unit-toggle {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 8px 14px;
+  bottom: 24px;
+  right: 24px;
+  padding: 8px 16px;
   border-radius: 20px;
-  border: none;
-  background: #ffffff;
-  color: #000;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-/* Toggle button in dark mode */
-body.dark-mode #theme-toggle {
-  background: #222;
-  color: #fff;
+.unit-toggle:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
 }
 
-/* 🌙 FORCE DARK MODE */
+/* Dark Mode */
 body.dark-mode {
-  background: #000000 !important;
-  color: #ffffff !important;
+  --bg-primary: #0f172a;
+  --bg-card: #1e293b;
+  --bg-card-hover: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent: #60a5fa;
+  --accent-hover: #93c5fd;
+  --border: #334155;
 }
 
-/* 📱 MOBILE RESPONSIVENESS */
-@media (max-width: 600px) {
+body.dark-mode .search-box {
+  background: var(--bg-card);
+}
+
+body.dark-mode .icon-btn {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+
+body.dark-mode .search-box input {
+  color: var(--text-primary);
+}
+
+body.dark-mode .search-btn {
+  background: var(--accent);
+}
+
+body.dark-mode .search-btn:hover {
+  background: var(--accent-hover);
+}
+
+body.dark-mode .weather-card {
+  background: var(--bg-card);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .location svg {
+  color: var(--text-muted);
+}
+
+body.dark-mode .location h2,
+body.dark-mode #temp {
+  color: var(--text-primary);
+}
+
+body.dark-mode .unit {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .condition {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .unit-toggle {
+  background: var(--bg-card-hover);
+  border-color: var(--border);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.weather-card {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
   body {
-    margin-top: 40px;
-    padding: 0 15px;
+    padding: 16px;
+    align-items: flex-start;
+    padding-top: 40px;
   }
 
-  .search-box input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .search-box button {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .search-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .weather-card {
+    padding: 28px 20px;
+    min-height: 280px;
   }
 
   #temp {
-    font-size: 28px;
+    font-size: 64px;
   }
 
-  #icon {
-    width: 60px;
-  }
-
-  #unit-toggle {
-    width: 100%;
-    margin-top: 15px;
-  }
-
-  #theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 6px 10px;
-    font-size: 12px;
+  .location h2 {
+    font-size: 18px;
   }
 }
