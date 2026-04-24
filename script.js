@@ -1,38 +1,39 @@
-const apiKey = "f0133e94263d448c963164120261904";
+// Check if config exists and has the key; otherwise, default to an empty string
+const apiKey = (typeof config !== 'undefined' && config.WEATHER_API_KEY) ? config.WEATHER_API_KEY : "";
 
 let currentUnit = "C"; // default
 let currentData = null; // store latest weather
 
 function getWeather() {
+    const city = document.getElementById("city").value.trim();
 
-const city = document.getElementById("city").value.trim();
+    if (!city) {
+        alert("Please enter a city name");
+        return;
+    }
 
-if (!city) {
-alert("Please enter a city name");
-return;
+    // Handle missing API key gracefully
+    if (!apiKey) {
+        alert("API Key is missing. If you're the developer, please check your environment variables or config.js.");
+        console.error("Weather API key not found.");
+        return;
+    }
+
+    const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}`;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error.message);
+                return;
+            }
+            updateWeather(data);
+        })
+        .catch(() => {
+            alert("Failed to fetch weather data. Please check your connection.");
+        });
 }
-
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}`;
-
-fetch(url)
-.then(res => res.json())
-.then(data => {
-
-if (data.error) {
-alert(data.error.message);
-return;
-}
-
-updateWeather(data);
-
-})
-.catch(() => {
-alert("Failed to fetch weather data");
-});
-
-}
-
 
 function updateWeather(data){
 
@@ -67,9 +68,9 @@ getWeather();
 
 });
 
-
-
-navigator.geolocation.getCurrentPosition(showPosition);
+if (apiKey) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+}
 
 function showPosition(position){
 
@@ -80,13 +81,13 @@ const url =
 `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
 
 fetch(url)
-.then(res => res.json())
-.then(data => {
-
-updateWeather(data);
-
-});
-
+        .then(res => res.json())
+        .then(data => {
+            if (!data.error) {
+                updateWeather(data);
+            }
+        })
+        .catch(err => console.error("Geolocation weather fetch failed:", err));
 }
 
 
@@ -126,6 +127,56 @@ themeBtn.addEventListener("click", () => {
   } else {
     themeBtn.innerText = "🌙 Dark Mode";
     localStorage.setItem("theme", "light");
+  }
+});
+
+// 🔍 CITY AUTOCOMPLETE FEATURE
+
+const cityInput = document.getElementById("city");
+
+// dropdown element create karo
+const dropdown = document.createElement("ul");
+dropdown.classList.add("dropdown");
+cityInput.parentNode.appendChild(dropdown);
+
+// input change hone par suggestions lao
+cityInput.addEventListener("input", async function () {
+  const query = this.value.trim();
+
+  if (query.length < 2) {
+    dropdown.innerHTML = "";
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${query}`
+    );
+    const data = await res.json();
+
+    dropdown.innerHTML = "";
+
+    data.forEach((city) => {
+      const li = document.createElement("li");
+      li.innerText = `${city.name}, ${city.country}`;
+
+      li.addEventListener("click", () => {
+        cityInput.value = city.name + ", " + city.country;
+        dropdown.innerHTML = "";
+        getWeather(); // auto search
+      });
+
+      dropdown.appendChild(li);
+    });
+
+  } catch (err) {
+    console.error("Autocomplete error:", err);
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (!cityInput.contains(e.target)) {
+    dropdown.innerHTML = "";
   }
 });
 

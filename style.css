@@ -41,6 +41,7 @@ background:#ff6b6b;
 color:white;
 
 cursor:pointer;
+opacity: 0.8;
 
 }
 
@@ -163,6 +164,48 @@ body.dark-mode {
   color: #ffffff !important;
 }
 
+/* 🔽 AUTOCOMPLETE DROPDOWN */
+.search-box {
+  position: relative;
+  display: inline-block; /* 🔥 important */
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%; 
+  left: 0;
+  width: 100%; 
+  background: white;
+  color: black;
+  list-style: none;
+  margin-top: 5px;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.dropdown li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background: #eee;
+}
+
+/* 🌙 DARK MODE SUPPORT FOR DROPDOWN */
+body.dark-mode .dropdown {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+body.dark-mode .dropdown li:hover {
+  background: #333;
+}
 /* 📱 MOBILE RESPONSIVENESS */
 @media (max-width: 600px) {
   body {

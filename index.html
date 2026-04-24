@@ -23,8 +23,9 @@
     type="text"
     id="city"
     placeholder="Enter city name"
+    autocomplete="off"
   />
-
+  <ul id="suggestions" class="dropdown"></ul>
   <button onclick="getWeather()">Search</button>
 
 </div>
@@ -44,6 +45,7 @@
 
 </div>
 
+<script src="config.js"></script>
 <script src="script.js"></script>
 
 </body>
