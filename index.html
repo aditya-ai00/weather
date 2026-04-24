@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+
+ 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,9 +31,6 @@
 
 </div>
 
-<!-- ✅ Unit Toggle Button -->
-<button id="unit-toggle">Switch to °F</button>
-
 <div id="weather-card">
 
   <h2 id="name">City</h2>
@@ -43,6 +42,15 @@
   <img id="icon" alt="">
 
 </div>
+
+      <!-- 5-Day Forecast -->
+      
+      <div id="forecast-section" class="forecast-section hidden">
+        <h2 class="forecast-title">5-Day Forecast</h2>
+        <div id="forecast-cards" class="forecast-cards"></div>
+      </div>
+    </div>
+
 
 <script src="script.js"></script>
 
