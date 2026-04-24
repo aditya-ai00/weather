@@ -1,29 +1,46 @@
-const apiKey = "f0133e94263d448c963164120261904";
+const apiKey = "";
 
 let currentUnit = "C"; // default
 let currentData = null; // store latest weather
 
 function getWeather() {
+    const city = document.getElementById("city").value.trim();
 
-const city = document.getElementById("city").value.trim();
+    if (!city) {
+        alert("Please enter a city name");
+        return;
+    }
 
-if (!city) {
-alert("Please enter a city name");
-return;
+    const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=5`;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error.message);
+                return;
+            }
+
+            updateWeather(data);
+        })
+        .catch(() => {
+            alert("Failed to fetch weather data");
+        });
 }
 
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}`;
+function updateWeather(data) {
+    document.getElementById("name").innerText =
+        data.location.name + ", " + data.location.country;
 
-fetch(url)
-.then(res => res.json())
-.then(data => {
+    document.getElementById("temp").innerText =
+        Math.round(data.current.temp_c) + " °C";
 
-if (data.error) {
-alert(data.error.message);
-return;
+    document.getElementById("condition").innerText =
+        data.current.condition.text;
+
+    document.getElementById("icon").src =
+        "https:" + data.current.condition.icon;
 }
-
 updateWeather(data);
 
 })
@@ -58,17 +75,24 @@ function updateWeather(data){
     "https:" + data.current.condition.icon;
 }
 
-
-document.getElementById("city").addEventListener("keypress", function(e){
-
-if(e.key === "Enter"){
-getWeather();
-}
-
+document.getElementById("city").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        getWeather();
+    }
 });
 
+navigator.geolocation.getCurrentPosition(function (position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
+    const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${lon}&days=5`;
 
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            updateWeather(data);
+        });
+});
 navigator.geolocation.getCurrentPosition(showPosition);
 
 function showPosition(position){
