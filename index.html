@@ -4,48 +4,60 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <div class="container">
+    <header>
+      <button id="theme-toggle" aria-label="Toggle theme">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </header>
 
-<button id="theme-toggle">🌙 Dark Mode</button>
+    <main>
+      <div class="search-wrapper">
+        <div class="search-box">
+          <input type="text" id="city" placeholder="Search city" autocomplete="off">
+          <button onclick="getWeather()" class="search-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+        </div>
+      </div>
 
-<h1>Weather Dashboard</h1>
+      <div class="weather-card" id="weather-card">
+        <div class="weather-content">
+          <div class="location">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <h2 id="name">City</h2>
+          </div>
 
-<div class="search-box">
+          <div class="weather-main">
+            <div class="temp-wrapper">
+              <span id="temp">--°</span>
+              <span class="unit">C</span>
+            </div>
+          </div>
 
-  <input
-    type="text"
-    id="city"
-    placeholder="Enter city name"
-  />
+          <p id="condition" class="condition">Search for a city</p>
+        </div>
 
-  <button onclick="getWeather()">Search</button>
+        <button id="unit-toggle" class="unit-toggle">°F</button>
+      </div>
 
-</div>
+      <div class="forecast-section" id="forecast-section" style="display: none;">
+        <h3 class="forecast-title">7-Day Forecast</h3>
+        <div class="forecast-list" id="forecast"></div>
+      </div>
+    </main>
+  </div>
 
-<!-- ✅ Unit Toggle Button -->
-<button id="unit-toggle">Switch to °F</button>
-
-<div id="weather-card">
-
-  <h2 id="name">City</h2>
-
-  <p id="temp">-- °C</p>
-
-  <p id="condition"></p>
-
-  <img id="icon" alt="">
-
-</div>
-
-<script src="script.js"></script>
-
+  <script src="config.js"></script>
+  <script src="script.js"></script>
 </body>
-
 </html>
