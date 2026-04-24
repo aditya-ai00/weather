@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-=======
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather Dashboard</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <canvas id="bgCanvas"></canvas>
-    <div class="video-bg">
-      <video id="bgVideoA" class="bg-video active" autoplay muted loop playsinline src="videos/clear.mp4"></video>
-      <video id="bgVideoB" class="bg-video" autoplay muted loop playsinline src="videos/clear.mp4"></video>
-    </div>
-    <div class="overlay"></div>
-    <canvas id="effectsCanvas"></canvas>
-    <div class="container">
-      <h1 class="app-title">Weather Dashboard</h1>
->>>>>>> fbcdbc2 (update UI and background)
 
+ 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weather Dashboard</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
+<button id="theme-toggle">🌙 Dark Mode</button>
+
 <h1>Weather Dashboard</h1>
 
 <div class="search-box">
-<input type="text" id="city" placeholder="Enter city name">
-<button onclick="getWeather()">Search</button>
+
+  <input
+    type="text"
+    id="city"
+    placeholder="Enter city name"
+  />
+
+  <button onclick="getWeather()">Search</button>
+
 </div>
 
-<<<<<<< HEAD
 <div id="weather-card">
-<h2 id="name">City</h2>
-<p id="temp">-- °C</p>
-<p id="condition"></p>
+
+  <h2 id="name">City</h2>
+
+  <p id="temp">-- °C</p>
+
+  <p id="condition"></p>
+
+  <img id="icon" alt="">
+
 </div>
-=======
+
       <!-- 5-Day Forecast -->
       
       <div id="forecast-section" class="forecast-section hidden">
@@ -50,9 +50,10 @@
         <div id="forecast-cards" class="forecast-cards"></div>
       </div>
     </div>
->>>>>>> fbcdbc2 (update UI and background)
+
 
 <script src="script.js"></script>
 
 </body>
+
 </html>

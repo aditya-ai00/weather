@@ -54,63 +54,22 @@ function getWeather() {
         });
 }
 
-<<<<<<< HEAD
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},IN&appid=${apiKey}&units=metric`;
 
-=======
-function displayCurrentWeather(data) {
-    const { current, location } = data;
-    const temp = isCelsius ? current.temp_c : current.temp_f;
-    const feels = isCelsius ? current.feelslike_c : current.feelslike_f;
-    const wind = isCelsius ? `${current.wind_kph} km/h` : `${current.wind_mph} mph`;
-
-    document.getElementById("city-name").textContent = `${location.name}, ${location.country}`;
-    document.getElementById("weather-condition").textContent = current.condition.text;
-    document.getElementById("weather-icon").src = `https:${current.condition.icon}`;
-    document.getElementById("temp").textContent = `${Math.round(temp)}°${isCelsius ? "C" : "F"}`;
-    document.getElementById("feels-like").textContent = `${Math.round(feels)}°${isCelsius ? "C" : "F"}`;
-    document.getElementById("humidity").textContent = `${current.humidity}%`;
-    document.getElementById("wind").textContent = wind;
-    document.getElementById("wind-dir").textContent = current.wind_dir;
->>>>>>> fbcdbc2 (update UI and background)
     document.getElementById("current-weather").classList.remove("hidden");
 }
 
 function displayForecast(days) {
     const container = document.getElementById("forecast-cards");
     container.innerHTML = "";
-<<<<<<< HEAD
 
-      document.getElementById("temp").innerText =
-        Math.round(data.main.temp) + " °C";
+navigator.geolocation.getCurrentPosition(showPosition);
 
-      document.getElementById("condition").innerText =
-        data.weather[0].description;
+function showPosition(position){
 
     })
     .catch(() => {
       alert("City not found");
-=======
-    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-    days.forEach((day) => {
-        const date = new Date(`${day.date}T00:00:00`);
-        const dayName = dayNames[date.getDay()];
-        const dateStr = `${date.getDate()} ${date.toLocaleString("default", { month: "short" })}`;
-        const maxTemp = isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f;
-        const minTemp = isCelsius ? day.day.mintemp_c : day.day.mintemp_f;
-
-        const card = document.createElement("div");
-        card.className = "forecast-card";
-        card.innerHTML = `
-            <div class="forecast-day">${dayName}, ${dateStr}</div>
-            <img src="https:${day.day.condition.icon}" alt="${day.day.condition.text}">
-            <div class="forecast-high">${Math.round(maxTemp)}°</div>
-            <div class="forecast-low">${Math.round(minTemp)}°</div>
-            <div class="forecast-condition">${day.day.condition.text}</div>
-        `;
-        container.appendChild(card);
->>>>>>> fbcdbc2 (update UI and background)
     });
 
     document.getElementById("forecast-section").classList.remove("hidden");
@@ -273,3 +232,61 @@ bgVideos.forEach((video) => {
     video.playsInline = true;
     video.play().catch(() => {});
 });
+
+const lat = position.coords.latitude;
+const lon = position.coords.longitude;
+
+const url =
+`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
+
+fetch(url)
+.then(res => res.json())
+.then(data => {
+
+updateWeather(data);
+
+});
+
+}
+
+
+document.getElementById("unit-toggle").addEventListener("click", function(){
+
+  if(!currentData) return; // no data yet
+
+  if(currentUnit === "C"){
+    currentUnit = "F";
+    this.innerText = "Switch to °C";
+  } else {
+    currentUnit = "C";
+    this.innerText = "Switch to °F";
+  }
+
+  updateWeather(currentData); // refresh display
+});
+
+
+
+// 🌙 DARK MODE TOGGLE
+const themeBtn = document.getElementById("theme-toggle");
+
+// Load saved theme (optional but recommended)
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  themeBtn.innerText = "☀️ Light Mode";
+}
+
+// Toggle on click
+themeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  if (document.body.classList.contains("dark-mode")) {
+    themeBtn.innerText = "☀️ Light Mode";
+    localStorage.setItem("theme", "dark");
+  } else {
+    themeBtn.innerText = "🌙 Dark Mode";
+    localStorage.setItem("theme", "light");
+  }
+});
+
+

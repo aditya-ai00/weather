@@ -1,16 +1,12 @@
-<<<<<<< HEAD
 body{
-font-family: Arial, sans-serif;
+
+font-family:Arial;
 text-align:center;
-background: linear-gradient(135deg,#667eea,#764ba2);
+background:linear-gradient(135deg,#667eea,#764ba2);
+
 color:white;
+
 margin-top:80px;
-=======
- #weatherChart {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
->>>>>>> fbcdbc2 (update UI and background)
 }
 
 
@@ -98,20 +94,59 @@ body {
     width: 100%;
     max-width: 700px;
     text-align: center;
+
+
 }
+
+
+
+.search-box input{
+
+padding:10px;
+
+width:230px;
+
+border:none;
+
+border-radius:6px;
+
+
+}
+
+
 
 .search-box button{
-padding:10px 20px;
+
+padding:10px 18px;
+
 margin-left:10px;
+
 border:none;
-border-radius:5px;
+
+border-radius:6px;
+
 background:#ff6b6b;
+
 color:white;
+
 cursor:pointer;
+
 }
 
+
+
+.search-box button:hover{
+
+background:#ff4d4d;
+
+}
+
+
+
 #weather-card{
+
 margin-top:40px;
+
 }
 
 .search-box input {
