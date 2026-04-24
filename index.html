@@ -8,7 +8,7 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
-
+   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
@@ -23,6 +23,7 @@
     type="text"
     id="city"
     placeholder="Enter city name"
+    class="text-black"
   />
 
   <button onclick="getWeather()">Search</button>
@@ -42,8 +43,34 @@
 
   <img id="icon" alt="">
 
-</div>
+</div> 
 
+<div id="forecast-conatanir">
+ 
+ <!--
+ <div class="flex flex-nowrap justify-center overflow-x-auto gap-4 p-2">
+   <div id="forecast-cards" class="w-[160px] flex-shrink-0 bg-black/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-2 px-4 rounded-md border-2 border-white transition duration-300 ease-in-out transform hover:scale-105"> 
+    <h1 id="dayid"></h1>
+    <p id="dateid"></p></div>
+   <div id="forecast" class="w-[160px] flex-shrink-0 bg-black/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-2 px-4 rounded-md border-2 border-white transition duration-300 ease-in-out transform hover:scale-105 "> 
+    <h1 id="dayid">MONDAY</h1>
+    <p id="dateid">4863</p>
+   </div>
+   <div id="forecast" class="w-[160px] flex-shrink-0 bg-black/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-2 px-4 rounded-md border-2 border-white  transition duration-300 ease-in-out transform hover:scale-105"> 
+    <h1 id="dayid">MONDAY</h1>
+    <p id="dateid">4863</p>
+   </div>
+   <div id="forecast" class="w-[160px] flex-shrink-0 bg-black/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-2 px-4 rounded-md border-2 border-white transition duration-300 ease-in-out transform hover:scale-105"> 
+    <h1 id="dayid">MONDAY</h1>
+    <p id="dateid">4863</p>
+   </div>
+   <div id="forecast" class="w-[160px] flex-shrink-0 bg-black/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-2 px-4 rounded-md border-2 border-white transition duration-300 ease-in-out transform hover:scale-105"> 
+    <h1 id="dayid">MONDAY</h1>
+    <p id="dateid">4863</p>
+   </div>
+  </div>
+-->
+</div>
 <script src="script.js"></script>
 
 </body>
