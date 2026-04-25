@@ -61,14 +61,45 @@ function updateWeather(data) {
     "https:" + data.current.condition.icon;
 }
 
-// 🔹 ENTER KEY SEARCH
-document.getElementById("city").addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    getWeather();
-  }
+// Dynamic weather icon mapping
+// Safety check for data
+    if (data && data.current && data.current.condition) {
+        const condition = data.current.condition.text.toLowerCase();
+        let weatherEmoji = "🌡️"; 
+
+        if (condition.includes("sunny") || condition.includes("clear")) {
+            weatherEmoji = "☀️";
+        } else if (condition.includes("cloud") || condition.includes("overcast")) {
+            weatherEmoji = "☁️";
+        } else if (condition.includes("rain") || condition.includes("drizzle")) {
+            weatherEmoji = "🌧️";
+        } else if (condition.includes("snow") || condition.includes("blizzard")) {
+            weatherEmoji = "❄️";
+        } else if (condition.includes("thunder") || condition.includes("storm")) {
+            weatherEmoji = "⛈️";
+        } else if (condition.includes("fog") || condition.includes("mist")) {
+            weatherEmoji = "🌫️";
+        } else if (condition.includes("wind")) {
+            weatherEmoji = "💨";
+        }
+
+        const emojiElement = document.getElementById("weather-emoji");
+        if (emojiElement) {
+            // InnerText update karo, par element ki classes (Dark Mode wali) ko mat hatana
+            emojiElement.innerText = weatherEmoji;
+        }
+    }     // Ensure styling isn't cleared if it's used for Dark Mode
+    }
+}
+document.getElementById("city").addEventListener("keypress", function(e){
+
+if(e.key === "Enter"){
+getWeather();
+}
+
 });
 
-// 🔹 GEOLOCATION
+
 navigator.geolocation.getCurrentPosition(showPosition);
 
 function showPosition(position) {
