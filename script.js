@@ -3,47 +3,50 @@ const apiKey = "f0133e94263d448c963164120261904";
 let currentUnit = "C"; // default
 let currentData = null; // store latest weather
 
+// 🔹 GET WEATHER FUNCTION
 function getWeather() {
+  const city = document.getElementById("city").value.trim();
+// fix: added default country handling
+  if (!city) {
+    alert("Please enter a city name");
+    return;
+  }
 
-const city = document.getElementById("city").value.trim();
+  let query;
 
-if (!city) {
-alert("Please enter a city name");
-return;
+  // ✅ Fix: default country handling
+  if (city.includes(",")) {
+    query = city;
+  } else {
+    query = city + ",IN";
+  }
+
+  const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error.message);
+        return;
+      }
+      updateWeather(data);
+    })
+    .catch(() => {
+      alert("Failed to fetch weather data");
+    });
 }
 
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}`;
-
-fetch(url)
-.then(res => res.json())
-.then(data => {
-
-if (data.error) {
-alert(data.error.message);
-return;
-}
-
-updateWeather(data);
-
-})
-.catch(() => {
-alert("Failed to fetch weather data");
-});
-
-}
-
-
-function updateWeather(data){
-
-  currentData = data; // store data
+// 🔹 UPDATE UI FUNCTION
+function updateWeather(data) {
+  currentData = data;
 
   document.getElementById("name").innerText =
     data.location.name + ", " + data.location.country;
 
   let temp;
 
-  if(currentUnit === "C"){
+  if (currentUnit === "C") {
     temp = Math.round(data.current.temp_c) + " °C";
   } else {
     temp = Math.round(data.current.temp_f) + " °F";
@@ -99,30 +102,24 @@ getWeather();
 
 navigator.geolocation.getCurrentPosition(showPosition);
 
-function showPosition(position){
+function showPosition(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
 
-const lat = position.coords.latitude;
-const lon = position.coords.longitude;
+  const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
 
-const url =
-`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
-
-fetch(url)
-.then(res => res.json())
-.then(data => {
-
-updateWeather(data);
-
-});
-
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      updateWeather(data);
+    });
 }
 
+// 🔹 UNIT TOGGLE
+document.getElementById("unit-toggle").addEventListener("click", function () {
+  if (!currentData) return;
 
-document.getElementById("unit-toggle").addEventListener("click", function(){
-
-  if(!currentData) return; // no data yet
-
-  if(currentUnit === "C"){
+  if (currentUnit === "C") {
     currentUnit = "F";
     this.innerText = "Switch to °C";
   } else {
@@ -130,21 +127,17 @@ document.getElementById("unit-toggle").addEventListener("click", function(){
     this.innerText = "Switch to °F";
   }
 
-  updateWeather(currentData); // refresh display
+  updateWeather(currentData);
 });
 
-
-
-// 🌙 DARK MODE TOGGLE
+// 🌙 DARK MODE
 const themeBtn = document.getElementById("theme-toggle");
 
-// Load saved theme (optional but recommended)
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark-mode");
   themeBtn.innerText = "☀️ Light Mode";
 }
 
-// Toggle on click
 themeBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
 
@@ -156,4 +149,3 @@ themeBtn.addEventListener("click", () => {
     localStorage.setItem("theme", "light");
   }
 });
-

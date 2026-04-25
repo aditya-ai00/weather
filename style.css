@@ -162,3 +162,47 @@ body.dark-mode {
   background: #000000 !important;
   color: #ffffff !important;
 }
+
+/* 📱 MOBILE RESPONSIVENESS */
+@media (max-width: 600px) {
+  body {
+    margin-top: 40px;
+    padding: 0 15px;
+  }
+
+  .search-box input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .search-box button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .search-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #temp {
+    font-size: 28px;
+  }
+
+  #icon {
+    width: 60px;
+  }
+
+  #unit-toggle {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  #theme-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
