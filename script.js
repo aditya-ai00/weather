@@ -61,6 +61,70 @@ function updateWeather(data) {
     "https:" + data.current.condition.icon;
 }
 
+
+document.getElementById("city").addEventListener("keypress", function(e){
+
+if(e.key === "Enter"){
+getWeather();
+document.getElementById("suggestions-list").style.display = "none";
+}
+
+});
+
+// 🏙️ AUTOCOMPLETE SUGGESTIONS LOGIC
+const cityInput = document.getElementById("city");
+const suggestionsList = document.getElementById("suggestions-list");
+let debounceTimer;
+
+cityInput.addEventListener("input", function() {
+    clearTimeout(debounceTimer);
+    const query = this.value.trim();
+    
+    if (query.length < 2) {
+        suggestionsList.style.display = "none";
+        suggestionsList.innerHTML = "";
+        return;
+    }
+    
+    debounceTimer = setTimeout(() => {
+        const url = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
+        
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                suggestionsList.innerHTML = "";
+                
+                if (data.length > 0) {
+                    suggestionsList.style.display = "block";
+                    data.forEach(location => {
+                        const li = document.createElement("li");
+                        li.textContent = `${location.name}, ${location.country}`;
+                        li.addEventListener("click", () => {
+                            cityInput.value = location.name;
+                            suggestionsList.style.display = "none";
+                            getWeather();
+                        });
+                        suggestionsList.appendChild(li);
+                    });
+                } else {
+                    suggestionsList.style.display = "none";
+                }
+            })
+            .catch(() => {
+                suggestionsList.style.display = "none";
+            });
+    }, 300);
+});
+
+// Hide suggestions when clicking outside
+document.addEventListener("click", function(e) {
+    if (e.target !== cityInput && e.target !== suggestionsList) {
+        suggestionsList.style.display = "none";
+    }
+});
+
+
+
 // 🔹 ENTER KEY SEARCH
 document.getElementById("city").addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
