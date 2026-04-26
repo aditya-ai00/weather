@@ -157,6 +157,58 @@ body.dark-mode #theme-toggle {
   color: #fff;
 }
 
+/*FORECAST SECTION*/
+
+#forecast-container{
+  margin-top: 40px;
+  padding-bottom: 40px;
+}
+#forecast-title{
+  font-size:22px;
+  margin-bottom:20px;
+}
+
+#forecast-cards{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap:15px;
+}
+
+.forecast-card{
+   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 16px 20px;
+  width: 130px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+.forecast-card:hover {
+  transform: translateY(-5px);
+}
+
+.forecast-day {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.forecast-condition {
+  font-size: 12px;
+  margin: 6px 0;
+}
+
+.forecast-temp {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.forecast-card img {
+  width: 50px;
+}
+
 /* 🌙 FORCE DARK MODE */
 body.dark-mode {
   background: #000000 !important;
@@ -204,5 +256,13 @@ body.dark-mode {
     right: 10px;
     padding: 6px 10px;
     font-size: 12px;
+  }
+   #forecast-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .forecast-card {
+    width: 80%;
   }
 }
