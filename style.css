@@ -239,3 +239,53 @@ body.dark-mode .spinner-circle {
   border-color: rgba(255, 255, 255, 0.1);
   border-top-color: #60a5fa;
 }
+
+/* 📍 GEOLOCATION BUTTON */
+#geo-btn {
+  padding: 10px 14px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #764ba2;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#geo-btn:hover {
+  background: #f0e6ff;
+  transform: scale(1.05);
+}
+
+#geo-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+/* Dark mode geo button */
+body.dark-mode #geo-btn {
+  background: #333;
+  color: #60a5fa;
+}
+
+body.dark-mode #geo-btn:hover {
+  background: #444;
+}
+
+/* 📍 Geolocation error message */
+.geo-error-msg {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #ffd6d6;
+  background: rgba(255, 0, 0, 0.15);
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+body.dark-mode .geo-error-msg {
+  color: #fca5a5;
+  background: rgba(255, 0, 0, 0.2);
+}

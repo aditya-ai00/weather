@@ -73,7 +73,7 @@ document.getElementById("city").addEventListener("keypress", function (e) {
   }
 });
 
-// 🔹 GEOLOCATION
+// 🔹 AUTO GEOLOCATION ON PAGE LOAD (silent — no error shown to user)
 navigator.geolocation.getCurrentPosition(showPosition);
 
 function showPosition(position) {
@@ -94,6 +94,81 @@ function showPosition(position) {
     .catch(() => {
       spinner.classList.add("hidden");
     });
+}
+
+// 📍 USER-TRIGGERED GEOLOCATION BUTTON
+function getLocationWeather() {
+  const geoBtn = document.getElementById("geo-btn");
+  const geoError = document.getElementById("geo-error");
+  const spinner = document.getElementById("loading-spinner");
+
+  // Clear any previous error
+  geoError.classList.add("hidden");
+  geoError.innerText = "";
+
+  // Check if geolocation is supported
+  if (!navigator.geolocation) {
+    geoError.innerText = "⚠️ Geolocation is not supported by your browser.";
+    geoError.classList.remove("hidden");
+    return;
+  }
+
+  // Show loading state on button
+  geoBtn.innerText = "⏳";
+  geoBtn.disabled = true;
+
+  navigator.geolocation.getCurrentPosition(
+    // ✅ Success callback
+    function (position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
+
+      spinner.classList.remove("hidden");
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          spinner.classList.add("hidden");
+          geoBtn.innerText = "📍";
+          geoBtn.disabled = false;
+
+          if (data.error) {
+            geoError.innerText = "⚠️ Could not get weather for your location.";
+            geoError.classList.remove("hidden");
+            return;
+          }
+
+          updateWeather(data);
+        })
+        .catch(() => {
+          spinner.classList.add("hidden");
+          geoBtn.innerText = "📍";
+          geoBtn.disabled = false;
+          geoError.innerText = "⚠️ Failed to fetch weather data. Please try again.";
+          geoError.classList.remove("hidden");
+        });
+    },
+
+    // ❌ Error callback
+    function (error) {
+      geoBtn.innerText = "📍";
+      geoBtn.disabled = false;
+
+      if (error.code === error.PERMISSION_DENIED) {
+        geoError.innerText = "🚫 Location access was denied. Please search manually.";
+      } else if (error.code === error.POSITION_UNAVAILABLE) {
+        geoError.innerText = "⚠️ Location information is unavailable. Please search manually.";
+      } else if (error.code === error.TIMEOUT) {
+        geoError.innerText = "⏱️ Location request timed out. Please try again.";
+      } else {
+        geoError.innerText = "⚠️ An unknown error occurred. Please search manually.";
+      }
+
+      geoError.classList.remove("hidden");
+    }
+  );
 }
 
 // 🔹 UNIT TOGGLE
