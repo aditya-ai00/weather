@@ -27,12 +27,23 @@
 
   <button onclick="getWeather()">Search</button>
 
+  <!-- 📍 Geolocation Button -->
+  <button id="geo-btn" onclick="getLocationWeather()" title="Use my location">📍</button>
+
 </div>
 
 <!-- ✅ Unit Toggle Button -->
 <button id="unit-toggle">Switch to °F</button>
 
+<!-- 📍 Geolocation error message -->
+<p id="geo-error" class="hidden geo-error-msg"></p>
+
 <div id="weather-card">
+
+  <!-- ⏳ Loading Spinner -->
+  <div id="loading-spinner" class="spinner hidden">
+    <div class="spinner-circle"></div>
+  </div>
 
   <h2 id="name">City</h2>
 
