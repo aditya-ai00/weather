@@ -1,8 +1,7 @@
 const apiKey = "f0133e94263d448c963164120261904";
 
-let currentUnit = "C"; 
-let currentData = null; 
-
+let currentUnit = "C"; // default
+let currentData = null; // store latest weather
 const dashboardContent = document.getElementById("dashboard-content");
 const loadingSpinner = document.getElementById("loading-spinner");
 
@@ -43,23 +42,23 @@ function fetchWeatherData(url) {
 function formatDate(dateString) {
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   // Replace space with T for proper ISO 8601 parsing across browsers (Safari fix)
-  const safeDateString = dateString.replace(' ', 'T'); 
+  const safeDateString = dateString.replace(' ', 'T');
   const d = new Date(safeDateString);
   return d.toLocaleDateString(undefined, options);
 }
 
 function updateWeather(data) {
-  currentData = data; 
+  currentData = data;
   if (dashboardContent) dashboardContent.classList.remove("hidden");
 
   document.getElementById("name").innerText = `${data.location.name}, ${data.location.country}`;
-  
+
   if (document.getElementById("date-time")) {
     document.getElementById("date-time").innerText = formatDate(data.location.localtime);
   }
 
   let temp, feelsLike;
-  if(currentUnit === "C"){
+  if (currentUnit === "C") {
     temp = Math.round(data.current.temp_c) + "°";
     feelsLike = Math.round(data.current.feelslike_c) + "°";
   } else {
@@ -69,29 +68,29 @@ function updateWeather(data) {
 
   document.getElementById("temp").innerText = temp;
   document.getElementById("condition").innerText = data.current.condition.text;
-  
+
   const iconImg = document.getElementById("icon");
   iconImg.src = "https:" + data.current.condition.icon;
   iconImg.style.display = "block"; // Make sure it's visible after placeholder
-  
-  if(document.getElementById("feels-like")) {
+
+  if (document.getElementById("feels-like")) {
     document.getElementById("feels-like").innerText = feelsLike;
   }
-  if(document.getElementById("uv-index")) {
+  if (document.getElementById("uv-index")) {
     document.getElementById("uv-index").innerText = data.current.uv;
   }
-  if(document.getElementById("humidity")) {
+  if (document.getElementById("humidity")) {
     document.getElementById("humidity").innerText = data.current.humidity;
     document.getElementById("humidity-bar").style.width = data.current.humidity + "%";
   }
-  if(document.getElementById("wind")) {
+  if (document.getElementById("wind")) {
     document.getElementById("wind").innerText = data.current.wind_kph;
     document.getElementById("wind-dir").innerText = data.current.wind_dir;
   }
-  if(document.getElementById("visibility")) {
+  if (document.getElementById("visibility")) {
     document.getElementById("visibility").innerText = data.current.vis_km;
   }
-  if(document.getElementById("pressure")) {
+  if (document.getElementById("pressure")) {
     document.getElementById("pressure").innerText = data.current.pressure_mb;
   }
 
@@ -111,7 +110,7 @@ function updateDynamicBackground(condition, isDay) {
     if (isDay) {
       gradient = "linear-gradient(135deg, #f6d365 0%, #fda085 100%)";
     } else {
-      gradient = "linear-gradient(135deg, #141e30 0%, #243b55 100%)"; 
+      gradient = "linear-gradient(135deg, #141e30 0%, #243b55 100%)";
     }
   } else {
     gradient = "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)";
@@ -120,8 +119,8 @@ function updateDynamicBackground(condition, isDay) {
   document.documentElement.style.setProperty('--weather-bg', gradient);
 }
 
-document.getElementById("city").addEventListener("keypress", function(e){
-  if(e.key === "Enter"){
+document.getElementById("city").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
     getWeather();
   }
 });
@@ -137,18 +136,18 @@ navigator.geolocation.getCurrentPosition((pos) => {
   fetchWeatherData(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=London`);
 });
 
-document.getElementById("unit-toggle").addEventListener("click", function(){
-  if(!currentData) return; 
+document.getElementById("unit-toggle").addEventListener("click", function () {
+  if (!currentData) return;
 
-  if(currentUnit === "C"){
+  if (currentUnit === "C") {
     currentUnit = "F";
-    this.innerText = "°C"; 
+    this.innerText = "°C";
   } else {
     currentUnit = "C";
     this.innerText = "°F";
   }
 
-  updateWeather(currentData); 
+  updateWeather(currentData);
 });
 
 // 🌙 DARK MODE TOGGLE
