@@ -63,8 +63,9 @@ function updateWeather(data) {
 
 // Dynamic weather icon mapping
 // Safety check for data
-    if (data && data.current && data.current.condition) {
-        const condition = data.current.condition.text.toLowerCase();
+   if (data && data.current && data.current.condition && data.current.condition.text) {
+  const condition = data.current.condition.text.toLowerCase();
+     );
         let weatherEmoji = "🌡️"; 
 
         if (condition.includes("sunny") || condition.includes("clear")) {
@@ -86,7 +87,7 @@ function updateWeather(data) {
         const emojiElement = document.getElementById("weather-emoji");
         if (emojiElement) {
             // InnerText update karo, par element ki classes (Dark Mode wali) ko mat hatana
-            emojiElement.innerText = weatherEmoji;
+          emojiElement.textContent = weatherEmoji;
         }
     }     // Ensure styling isn't cleared if it's used for Dark Mode
     }
