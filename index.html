@@ -17,18 +17,23 @@
 
 <h1>Weather Dashboard</h1>
 
-<div class="search-box">
+<div class="search-box" style="position: relative; display: inline-block;">
 
   <input
     type="text"
     id="city"
     placeholder="Enter city name"
+    autocomplete="off"
   />
 
   <button onclick="getWeather()">Search</button>
 
+
   <!-- 📍 Geolocation Button -->
   <button id="geo-btn" onclick="getLocationWeather()" title="Use my location">📍</button>
+
+  <ul id="suggestions-list" class="suggestions-list"></ul>
+
 
 </div>
 
