@@ -206,3 +206,59 @@ body.dark-mode {
     font-size: 12px;
   }
 }
+
+/* 🏙️ AUTOCOMPLETE SUGGESTIONS */
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 250px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: left;
+  z-index: 10;
+  display: none;
+  backdrop-filter: blur(5px);
+}
+
+body.dark-mode .suggestions-list {
+  background: rgba(34, 34, 34, 0.95);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.1);
+}
+
+.suggestions-list li {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+body.dark-mode .suggestions-list li {
+  border-bottom: 1px solid #444;
+}
+
+.suggestions-list li:last-child {
+  border-bottom: none;
+}
+
+.suggestions-list li:hover {
+  background: #f0f0f0;
+}
+
+body.dark-mode .suggestions-list li:hover {
+  background: #444;
+}
+
+@media (max-width: 600px) {
+  .suggestions-list {
+    width: 100%;
+  }
+}
