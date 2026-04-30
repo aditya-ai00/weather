@@ -1,99 +1,53 @@
-body{
-
-font-family:Arial;
-text-align:center;
-background:linear-gradient(135deg,#667eea,#764ba2);
-
-color:white;
-
-margin-top:80px;
-
+body {
+  font-family: Arial;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  margin-top: 80px;
 }
 
-
-
-.search-box input{
-
-padding:10px;
-
-width:230px;
-
-border:none;
-
-border-radius:6px;
-
+/* 🔍 SEARCH BOX */
+.search-box input {
+  padding: 10px;
+  width: 230px;
+  border: none;
+  border-radius: 6px;
 }
 
-
-
-.search-box button{
-
-padding:10px 18px;
-
-margin-left:10px;
-
-border:none;
-
-border-radius:6px;
-
-background:#ff6b6b;
-
-color:white;
-
-cursor:pointer;
-
+.search-box button {
+  padding: 10px 18px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #ff6b6b;
+  color: white;
+  cursor: pointer;
 }
 
-
-
-.search-box button:hover{
-
-background:#ff4d4d;
-
+.search-box button:hover {
+  background: #ff4d4d;
 }
 
-
-
-#weather-card{
-
-margin-top:40px;
-
+#weather-card {
+  margin-top: 40px;
 }
 
-
-
-#temp{
-
-font-size:40px;
-
-margin-top:10px;
-
+#temp {
+  font-size: 40px;
+  margin-top: 10px;
 }
 
-
-
-#icon{
-
-width:80px;
-
-margin-top:10px;
-
+#icon {
+  width: 80px;
+  margin-top: 10px;
 }
 
-
-
-input:focus{
-
-outline:none;
-
-box-shadow:0 0 8px rgba(255,255,255,0.6);
-
+input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255,255,255,0.6);
 }
 
-
-
-
-/* 🌡️ UNIT TOGGLE BUTTON (CLEAN STYLE) */
+/* 🌡️ UNIT TOGGLE (FIXED POSITION) */
 #unit-toggle {
   margin-top: 20px;
   padding: 10px 18px;
@@ -104,41 +58,35 @@ box-shadow:0 0 8px rgba(255,255,255,0.6);
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: inline-block;
 }
 
-/* HOVER EFFECT */
 #unit-toggle:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-/* ACTIVE CLICK EFFECT */
 #unit-toggle:active {
   transform: scale(0.97);
 }
 
-
 /* 🌙 DARK MODE */
-
-/* Body background */
 body.dark-mode {
-  background: #000000;
-  color: #ffffff;
+  background: #000000 !important;
+  color: #ffffff !important;
 }
 
-/* Input field */
 body.dark-mode input {
   background: #111;
   color: #fff;
 }
 
-/* Search button */
 body.dark-mode .search-box button {
   background: #333;
   color: #fff;
 }
 
-/* Toggle button style */
+/* 🌙 THEME TOGGLE */
 #theme-toggle {
   position: absolute;
   top: 20px;
@@ -151,63 +99,68 @@ body.dark-mode .search-box button {
   cursor: pointer;
 }
 
-/* Toggle button in dark mode */
 body.dark-mode #theme-toggle {
   background: #222;
   color: #fff;
 }
 
-/* 🌙 FORCE DARK MODE */
-body.dark-mode {
-  background: #000000 !important;
-  color: #ffffff !important;
+/* 🌫️ AIR QUALITY BUTTON */
+.airquality {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 }
 
-/* 📱 MOBILE RESPONSIVENESS */
-@media (max-width: 600px) {
-  body {
-    margin-top: 40px;
-    padding: 0 15px;
-  }
-
-  .search-box input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .search-box button {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .search-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #temp {
-    font-size: 28px;
-  }
-
-  #icon {
-    width: 60px;
-  }
-
-  #unit-toggle {
-    width: 100%;
-    margin-top: 15px;
-  }
-
-  #theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 6px 10px;
-    font-size: 12px;
-  }
+.airquality button {
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: lavender;
+  color: #4b0082;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
 }
 
-/* 🏙️ AUTOCOMPLETE SUGGESTIONS */
+.airquality button:hover {
+  background: #d8b4f8;
+  transform: scale(1.08);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* ✨ Pulse Animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* 🌫️ AQ RESULT */
+#aq-result {
+  margin: 20px auto;
+  padding: 18px;
+  width: 90%;
+  max-width: 320px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 14px;
+  background: linear-gradient(135deg, lavender, #e6e6fa);
+  color: #4b0082;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+#aq-result.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 🏙️ AUTOCOMPLETE */
 .suggestions-list {
   position: absolute;
   top: 100%;
@@ -225,28 +178,16 @@ body.dark-mode {
   text-align: left;
   z-index: 10;
   display: none;
-  backdrop-filter: blur(5px);
 }
 
 body.dark-mode .suggestions-list {
   background: rgba(34, 34, 34, 0.95);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(255,255,255,0.1);
 }
 
 .suggestions-list li {
   padding: 10px 15px;
   cursor: pointer;
-  border-bottom: 1px solid #eee;
-  transition: background 0.2s;
-}
-
-body.dark-mode .suggestions-list li {
-  border-bottom: 1px solid #444;
-}
-
-.suggestions-list li:last-child {
-  border-bottom: none;
 }
 
 .suggestions-list li:hover {
@@ -257,7 +198,45 @@ body.dark-mode .suggestions-list li:hover {
   background: #444;
 }
 
+/* 📱 RESPONSIVE (FIXED) */
 @media (max-width: 600px) {
+  body {
+    margin-top: 40px;
+    padding: 0 15px;
+  }
+
+  .search-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-box input,
+  .search-box button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  /* ✅ IMPORTANT FIX: prevent shift */
+  #unit-toggle {
+    width: auto;
+    display: inline-block;
+  }
+
+  #temp {
+    font-size: 28px;
+  }
+
+  #icon {
+    width: 60px;
+  }
+
+  #theme-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+  }
+
   .suggestions-list {
     width: 100%;
   }
