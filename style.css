@@ -3,55 +3,108 @@ body{
 font-family:Arial;
 text-align:center;
 background:linear-gradient(135deg,#667eea,#764ba2);
+background-repeat: no-repeat;
+background-attachment: fixed;
 
 color:white;
 
-margin-top:80px;
+margin-top:100px;
 
 }
 
 
-
-.search-box input{
-
-padding:10px;
-
-width:230px;
-
-border:none;
-
-border-radius:6px;
-
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-
-
-.search-box button{
-
-padding:10px 18px;
-
-margin-left:10px;
-
-border:none;
-
-border-radius:6px;
-
-background:#ff6b6b;
-
-color:white;
-
-cursor:pointer;
-
+/* Wrapper holds input + X button + suggestions dropdown */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-
-
-.search-box button:hover{
-
-background:#ff4d4d;
-
+.search-box input {
+  padding: 10px 40px 10px 16px; /* right padding leaves room for X */
+  width: clamp(160px, 40vw, 280px);
+  border: none;
+  border-radius: 50px;
 }
 
+/* ❌ CLEAR BUTTON - overlaid inside the input on the right */
+#clear-btn {
+  position: absolute;
+  right: 8px;
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: rgba(0,0,0,0.15) !important;
+  color: #333 !important;
+  fill: #333 !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* smooth appear/disappear */
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.6);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+#clear-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+#clear-btn:hover {
+  background: rgba(0,0,0,0.25) !important;
+}
+
+body.dark-mode #clear-btn {
+  background: rgba(255,255,255,0.2) !important;
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+body.dark-mode #clear-btn:hover {
+  background: rgba(255,255,255,0.35) !important;
+}
+
+/* 🔍 SEARCH BUTTON */
+.search-box > button[aria-label="Search"] {
+  padding: 10px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #ff6b6b;
+  color: white;
+  fill: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.search-box > button[aria-label="Search"]:hover {
+  background: #ff4d4d;
+}
+
+.search-icon {
+  height: 16px;
+  width: 16px;
+}
 
 
 #weather-card{
@@ -64,9 +117,7 @@ margin-top:40px;
 
 #temp{
 
-font-size:40px;
-
-margin-top:10px;
+font-size:48px;
 
 }
 
@@ -93,28 +144,52 @@ box-shadow:0 0 8px rgba(255,255,255,0.6);
 
 
 
-/* 🌡️ UNIT TOGGLE BUTTON (CLEAN STYLE) */
-#unit-toggle {
-  margin-top: 20px;
-  padding: 10px 18px;
-  border-radius: 25px;
+/* 🌡️ UNIT PILL TOGGLE */
+.temp-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+#unit-pill {
+  display: flex;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.unit-btn {
+  padding: 5px 13px;
   border: none;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  color: #333;
+  border-radius: 16px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
   font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-/* HOVER EFFECT */
-#unit-toggle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+.unit-btn.active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 }
 
-/* ACTIVE CLICK EFFECT */
-#unit-toggle:active {
-  transform: scale(0.97);
+.unit-btn:hover:not(.active) {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #unit-pill {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .unit-btn.active {
+  background: rgba(255, 255, 255, 0.85);
+  color: #111;
 }
 
 
@@ -128,7 +203,7 @@ body.dark-mode {
 
 /* Input field */
 body.dark-mode input {
-  background: #111;
+  background: #343434;
   color: #fff;
 }
 
@@ -143,23 +218,40 @@ body.dark-mode .search-box button {
   position: absolute;
   top: 20px;
   right: 20px;
-  padding: 8px 14px;
+  padding: 12px 14px;
   border-radius: 20px;
+  width: 8.5em;
   border: none;
   background: #ffffff;
   color: #000;
+  fill: #000;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Toggle button in dark mode */
 body.dark-mode #theme-toggle {
   background: #222;
   color: #fff;
+  fill: #fff;
+}
+
+.theme-icon {
+  width: 1em;
+  height: 1em;
+}
+.theme-label {
+  height: 1em;
+  margin: 0;
 }
 
 /* 🌙 FORCE DARK MODE */
 body.dark-mode {
-  background: #000000 !important;
+  background: linear-gradient(135deg,#1a1f38,#1b0e29) !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
   color: #ffffff !important;
 }
 
@@ -170,20 +262,17 @@ body.dark-mode {
     padding: 0 15px;
   }
 
+  .search-box {
+    width: 100%;
+  }
+
+  .input-wrapper {
+    flex: 1;
+  }
+
   .search-box input {
     width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .search-box button {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .search-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    box-sizing: border-box;
   }
 
   #temp {
@@ -192,11 +281,6 @@ body.dark-mode {
 
   #icon {
     width: 60px;
-  }
-
-  #unit-toggle {
-    width: 100%;
-    margin-top: 15px;
   }
 
   #theme-toggle {
@@ -210,9 +294,10 @@ body.dark-mode {
 /* 🏙️ AUTOCOMPLETE SUGGESTIONS */
 .suggestions-list {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 6px);
   left: 0;
-  width: 250px;
+  width: 100%;
+  min-width: 220px;
   background: rgba(255, 255, 255, 0.95);
   color: #333;
   list-style: none;
@@ -225,6 +310,7 @@ body.dark-mode {
   text-align: left;
   z-index: 10;
   display: none;
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
 

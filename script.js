@@ -6,7 +6,6 @@ let currentData = null; // store latest weather
 // 🔹 GET WEATHER FUNCTION
 function getWeather() {
   const city = document.getElementById("city").value.trim();
-// fix: added default country handling
   if (!city) {
     alert("Please enter a city name");
     return;
@@ -14,7 +13,6 @@ function getWeather() {
 
   let query;
 
-  // ✅ Fix: default country handling
   if (city.includes(",")) {
     query = city;
   } else {
@@ -47,9 +45,9 @@ function updateWeather(data) {
   let temp;
 
   if (currentUnit === "C") {
-    temp = Math.round(data.current.temp_c) + " °C";
+    temp = Math.round(data.current.temp_c) + "°";
   } else {
-    temp = Math.round(data.current.temp_f) + " °F";
+    temp = Math.round(data.current.temp_f) + "°";
   }
 
   document.getElementById("temp").innerText = temp;
@@ -63,12 +61,10 @@ function updateWeather(data) {
 
 
 document.getElementById("city").addEventListener("keypress", function(e){
-
-if(e.key === "Enter"){
-getWeather();
-document.getElementById("suggestions-list").style.display = "none";
-}
-
+  if(e.key === "Enter"){
+    getWeather();
+    document.getElementById("suggestions-list").style.display = "none";
+  }
 });
 
 // 🏙️ AUTOCOMPLETE SUGGESTIONS LOGIC
@@ -123,17 +119,28 @@ document.addEventListener("click", function(e) {
     }
 });
 
+// 🔹 CLEAR BUTTON
+const clearBtn = document.getElementById("clear-btn");
 
-
-// 🔹 ENTER KEY SEARCH
-document.getElementById("city").addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    getWeather();
+cityInput.addEventListener("input", function () {
+  if (this.value.length > 0) {
+    clearBtn.classList.add("visible");
+  } else {
+    clearBtn.classList.remove("visible");
   }
 });
 
+clearBtn.addEventListener("click", function () {
+  cityInput.value = "";
+  clearBtn.classList.remove("visible");
+  suggestionsList.style.display = "none";
+  cityInput.focus();
+});
+
 // 🔹 GEOLOCATION
-navigator.geolocation.getCurrentPosition(showPosition);
+navigator.geolocation.getCurrentPosition(showPosition, () => {
+  console.warn("Location denied");
+});
 
 function showPosition(position) {
   const lat = position.coords.latitude;
@@ -148,37 +155,39 @@ function showPosition(position) {
     });
 }
 
-// 🔹 UNIT TOGGLE
-document.getElementById("unit-toggle").addEventListener("click", function () {
-  if (!currentData) return;
-
-  if (currentUnit === "C") {
-    currentUnit = "F";
-    this.innerText = "Switch to °C";
-  } else {
-    currentUnit = "C";
-    this.innerText = "Switch to °F";
-  }
-
-  updateWeather(currentData);
+// 🔹 UNIT PILL TOGGLE
+document.querySelectorAll(".unit-btn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    if (!currentData) return;
+    document.querySelectorAll(".unit-btn").forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+    currentUnit = this.dataset.unit;
+    updateWeather(currentData);
+  });
 });
 
-// 🌙 DARK MODE
 const themeBtn = document.getElementById("theme-toggle");
+const themeIcon = themeBtn.querySelector(".theme-icon use");
+const themeLabel = themeBtn.querySelector(".theme-label");
 
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark-mode");
-  themeBtn.innerText = "☀️ Light Mode";
+function updateThemeToggle(isDark) {
+  if (themeIcon) {
+    const iconId = isDark ? "icon-sun" : "icon-moon";
+    themeIcon.setAttribute("href", `assets/icons.svg#${iconId}`);
+  }
+  if (themeLabel) {
+    themeLabel.textContent = isDark ? "Light Mode" : "Dark Mode";
+  }
 }
 
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
+const darkMode = localStorage.getItem("theme") === "dark";
+if (darkMode) {
+  document.body.classList.add("dark-mode");
+}
+updateThemeToggle(darkMode);
 
-  if (document.body.classList.contains("dark-mode")) {
-    themeBtn.innerText = "☀️ Light Mode";
-    localStorage.setItem("theme", "dark");
-  } else {
-    themeBtn.innerText = "🌙 Dark Mode";
-    localStorage.setItem("theme", "light");
-  }
+themeBtn.addEventListener("click", () => {
+  const isDark = document.body.classList.toggle("dark-mode");
+  updateThemeToggle(isDark);
+  localStorage.setItem("theme", isDark ? "dark" : "light");
 });
