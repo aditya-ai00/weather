@@ -21,10 +21,10 @@
         <span>Weather Dashboard</span>
       </div>
       <nav class="nav-menu">
-        <a href="javascript:void(0);" class="active"><i class="fa-solid fa-border-all"></i> Dashboard</a>
-        <a href="javascript:void(0);"><i class="fa-solid fa-map-location-dot"></i> Map</a>
-        <a href="javascript:void(0);"><i class="fa-solid fa-bookmark"></i> Saved</a>
-        <a href="javascript:void(0);"><i class="fa-solid fa-gear"></i> Settings</a>
+        <a href="javascript:void(0);" id="nav-dashboard" class="active"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+        <a href="javascript:void(0);" id="nav-map"><i class="fa-solid fa-map-location-dot"></i> Map</a>
+        <a href="javascript:void(0);" id="nav-saved"><i class="fa-solid fa-bookmark"></i> Saved</a>
+        <a href="javascript:void(0);" id="nav-settings"><i class="fa-solid fa-gear"></i> Settings</a>
       </nav>
       <div class="sidebar-bottom">
         <button id="theme-toggle" class="btn-theme"><i class="fa-solid fa-moon"></i> Theme</button>
@@ -128,6 +128,31 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- Placeholder contents -->
+      <div id="map-content" class="placeholder-section hidden">
+        <div class="placeholder-card widget-card">
+          <i class="fa-solid fa-map-location-dot fa-3x"></i>
+          <h2>Interactive Map</h2>
+          <p>Weather radar and interactive map features will be available here soon.</p>
+        </div>
+      </div>
+
+      <div id="saved-content" class="placeholder-section hidden">
+        <div class="placeholder-card widget-card">
+          <i class="fa-solid fa-bookmark fa-3x"></i>
+          <h2>Saved Locations</h2>
+          <p>Your favorite and bookmarked cities will be listed here.</p>
+        </div>
+      </div>
+
+      <div id="settings-content" class="placeholder-section hidden">
+        <div class="placeholder-card widget-card">
+          <i class="fa-solid fa-gear fa-3x"></i>
+          <h2>App Settings</h2>
+          <p>User preferences and application configurations will be available here.</p>
+        </div>
       </div>
 
     </main>

@@ -390,3 +390,38 @@ body.dark-mode .suggestions-list li:hover {
     width: 100%;
   }
 }
+
+/* Placeholder Sections */
+.placeholder-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.placeholder-card {
+  text-align: center;
+  padding: 50px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.placeholder-card i {
+  color: var(--primary-accent);
+  margin-bottom: 10px;
+}
+
+.placeholder-card h2 {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+}
+
+.placeholder-card p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.5;
+}

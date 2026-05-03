@@ -5,6 +5,53 @@ let currentData = null; // store latest weather
 const dashboardContent = document.getElementById("dashboard-content");
 const loadingSpinner = document.getElementById("loading-spinner");
 
+// 🔹 SIDEBAR NAVIGATION
+const navLinks = {
+  dashboard: document.getElementById("nav-dashboard"),
+  map: document.getElementById("nav-map"),
+  saved: document.getElementById("nav-saved"),
+  settings: document.getElementById("nav-settings")
+};
+
+const contentSections = {
+  dashboard: dashboardContent,
+  map: document.getElementById("map-content"),
+  saved: document.getElementById("saved-content"),
+  settings: document.getElementById("settings-content")
+};
+
+function switchTab(tabName) {
+  // Update active class on nav links
+  Object.values(navLinks).forEach(link => {
+    if (link) link.classList.remove("active");
+  });
+  if (navLinks[tabName]) {
+    navLinks[tabName].classList.add("active");
+  }
+
+  // Hide all sections
+  Object.values(contentSections).forEach(section => {
+    if (section) section.classList.add("hidden");
+  });
+
+  // Show selected section
+  if (tabName === 'dashboard') {
+    if (currentData) {
+      dashboardContent.classList.remove("hidden");
+    }
+  } else {
+    if (contentSections[tabName]) {
+      contentSections[tabName].classList.remove("hidden");
+    }
+  }
+}
+
+Object.keys(navLinks).forEach(tab => {
+  if (navLinks[tab]) {
+    navLinks[tab].addEventListener("click", () => switchTab(tab));
+  }
+});
+
 function getWeather() {
   const city = document.getElementById("city").value.trim();
 
@@ -17,6 +64,7 @@ function getWeather() {
 }
 
 function fetchWeatherData(url) {
+  switchTab('dashboard');
   if (dashboardContent) dashboardContent.classList.add("hidden");
   if (loadingSpinner) loadingSpinner.classList.remove("hidden");
 
