@@ -149,7 +149,6 @@ document.getElementById("unit-toggle").addEventListener("click", function () {
   }
 
   updateWeather(currentData);
-  updateWeather(currentData);
 });
 
 // 🌙 DARK MODE TOGGLE
