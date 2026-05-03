@@ -6,7 +6,7 @@ let currentData = null; // store latest weather
 // 🔹 GET WEATHER FUNCTION
 function getWeather() {
   const city = document.getElementById("city").value.trim();
-// fix: added default country handling
+
   if (!city) {
     alert("Please enter a city name");
     return;
@@ -23,9 +23,13 @@ function getWeather() {
 
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
 
+  const spinner = document.getElementById("loading-spinner");
+  spinner.classList.remove("hidden");
+
   fetch(url)
     .then(res => res.json())
     .then(data => {
+      spinner.classList.add("hidden");
       if (data.error) {
         alert(data.error.message);
         return;
@@ -33,6 +37,7 @@ function getWeather() {
       updateWeather(data);
     })
     .catch(() => {
+      spinner.classList.add("hidden");
       alert("Failed to fetch weather data");
     });
 }
@@ -141,10 +146,17 @@ function showPosition(position) {
 
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
 
+  const spinner = document.getElementById("loading-spinner");
+  spinner.classList.remove("hidden");
+
   fetch(url)
     .then(res => res.json())
     .then(data => {
+      spinner.classList.add("hidden");
       updateWeather(data);
+    })
+    .catch(() => {
+      spinner.classList.add("hidden");
     });
 }
 
