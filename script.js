@@ -5,6 +5,7 @@ let currentData = null; // store latest weather
 const dashboardContent = document.getElementById("dashboard-content");
 const loadingSpinner = document.getElementById("loading-spinner");
 
+// 🔹 GET WEATHER FUNCTION
 function getWeather() {
   const city = document.getElementById("city").value.trim();
 
@@ -147,6 +148,7 @@ document.getElementById("unit-toggle").addEventListener("click", function () {
     this.innerText = "°F";
   }
 
+  updateWeather(currentData);
   updateWeather(currentData);
 });
 
