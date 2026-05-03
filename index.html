@@ -1,54 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
+  <div class="dashboard-wrap">
 
-<button id="theme-toggle">🌙 Dark Mode</button>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <i class="fa-solid fa-cloud-sun-rain"></i>
+        <span>Weather Dashboard</span>
+      </div>
+      <nav class="nav-menu">
+        <a href="javascript:void(0);" class="active"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+        <a href="javascript:void(0);"><i class="fa-solid fa-map-location-dot"></i> Map</a>
+        <a href="javascript:void(0);"><i class="fa-solid fa-bookmark"></i> Saved</a>
+        <a href="javascript:void(0);"><i class="fa-solid fa-gear"></i> Settings</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <button id="theme-toggle" class="btn-theme"><i class="fa-solid fa-moon"></i> Theme</button>
+      </div>
+    </aside>
 
-<h1>Weather Dashboard</h1>
+    <!-- Main Content -->
+    <main class="main-content">
 
-<div class="search-box" style="position: relative; display: inline-block;">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="search-widget">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="city" placeholder="Search for cities..." autocomplete="off">
+          <button onclick="getWeather()" id="search-btn">Search</button>
+        </div>
 
-  <input
-    type="text"
-    id="city"
-    placeholder="Enter city name"
-    autocomplete="off"
-  />
+        <div class="topbar-actions">
+          <button id="unit-toggle" class="unit-btn">°C</button>
+          <div class="profile">
+            <img src="https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff&rounded=true" alt="Profile">
+          </div>
+        </div>
+      </header>
 
-  <button onclick="getWeather()">Search</button>
+      <div id="loading-spinner" class="hidden">
+        <div class="spinner"></div>
+        <p>Loading your weather...</p>
+      </div>
 
-  <ul id="suggestions-list" class="suggestions-list"></ul>
+      <div id="dashboard-content" class="dashboard-grid hidden">
 
-</div>
+        <!-- Left Column -->
+        <div class="left-panel">
+          <div class="current-weather-card" id="current-weather-bg">
+            <div class="card-header">
+              <h2 id="name">Select a City</h2>
+              <p id="date-time">Today</p>
+            </div>
+            <div class="card-body">
+              <div class="temp-display">
+                <h1 id="temp">--°</h1>
+                <p id="condition">--</p>
+              </div>
+              <img id="icon" alt="Weather" src="">
+            </div>
+          </div>
 
-<!-- ✅ Unit Toggle Button -->
-<button id="unit-toggle">Switch to °F</button>
+          <div class="widget-card feels-like-card">
+            <h3>Feels Like</h3>
+            <div class="widget-value">
+              <i class="fa-solid fa-temperature-half"></i>
+              <span id="feels-like">--°</span>
+            </div>
+          </div>
 
-<div id="weather-card">
+          <div class="widget-card uv-card">
+            <h3>UV Index</h3>
+            <div class="widget-value">
+              <i class="fa-regular fa-sun"></i>
+              <span id="uv-index">--</span>
+            </div>
+          </div>
+        </div>
 
-  <h2 id="name">City</h2>
+        <!-- Right Column (Highlights) -->
+        <div class="right-panel">
+          <div class="panel-header">
+            <h2>Today's Highlights</h2>
+          </div>
 
-  <p id="temp">-- °C</p>
+          <div class="highlights-grid">
 
-  <p id="condition"></p>
+            <div class="highlight-box">
+              <p class="highlight-title">Wind Status</p>
+              <h2 class="highlight-val"><span id="wind">--</span> <span class="unit">km/h</span></h2>
+              <p class="highlight-footer"><i class="fa-solid fa-compass"></i> Direction: <span id="wind-dir">--</span>
+              </p>
+            </div>
 
-  <img id="icon" alt="">
+            <div class="highlight-box">
+              <p class="highlight-title">Humidity</p>
+              <h2 class="highlight-val"><span id="humidity">--</span><span class="unit">%</span></h2>
+              <div class="progress-bar">
+                <div class="progress" id="humidity-bar" style="width: 0%"></div>
+              </div>
+            </div>
 
-</div>
+            <div class="highlight-box">
+              <p class="highlight-title">Visibility</p>
+              <h2 class="highlight-val"><span id="visibility">--</span> <span class="unit">km</span></h2>
+              <p class="highlight-footer"><i class="fa-regular fa-eye"></i> Standard</p>
+            </div>
 
-<script src="script.js"></script>
+            <div class="highlight-box">
+              <p class="highlight-title">Pressure</p>
+              <h2 class="highlight-val"><span id="pressure">--</span> <span class="unit">hPa</span></h2>
+              <p class="highlight-footer"><i class="fa-solid fa-gauge"></i> Normal</p>
+            </div>
 
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 
 </html>
