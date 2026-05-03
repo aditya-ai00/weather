@@ -4,51 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
 
-<button id="theme-toggle">🌙 Dark Mode</button>
+<button id="theme-toggle">
+  <svg class="theme-icon"><use href="assets/icons/icons.svg#icon-moon"></use></svg>
+  <p class="theme-label">Dark Mode</p>
+</button>
 
 <h1>Weather Dashboard</h1>
 
-<div class="search-box" style="position: relative; display: inline-block;">
-
-  <input
-    type="text"
-    id="city"
-    placeholder="Enter city name"
-    autocomplete="off"
-  />
-
-  <button onclick="getWeather()">Search</button>
-
-  <ul id="suggestions-list" class="suggestions-list"></ul>
-
+<div class="search-box">
+  <div class="input-wrapper">
+    <input type="text" id="city" placeholder="Enter city name" autocomplete="off"/>
+    <button id="clear-btn" aria-label="Clear">
+      <svg class="search-icon"><use href="assets/icons/icons.svg#icon-x"></use></svg>
+    </button>
+    <ul id="suggestions-list" class="suggestions-list"></ul>
+  </div>
+  <button onclick="getWeather()" aria-label="Search">
+    <svg class="search-icon"><use href="assets/icons/icons.svg#icon-search"></use></svg>
+  </button>
 </div>
 
-<!-- ✅ Unit Toggle Button -->
-<button id="unit-toggle">Switch to °F</button>
-
 <div id="weather-card">
+  <div id="card-backdrop"></div>
 
-  <h2 id="name">City</h2>
+  <div id="card-content">
+    <h2 id="name">City</h2>
 
-  <p id="temp">-- °C</p>
+    <div id="weather-icon-wrap">
+      <img id="icon" alt="" />
+    </div>
 
-  <p id="condition"></p>
+    <div class="temp-row">
+      <p id="temp">--</p>
+      <div id="unit-pill">
+        <button class="unit-btn active" data-unit="C">°C</button>
+        <button class="unit-btn" data-unit="F">°F</button>
+      </div>
+    </div>
 
-  <img id="icon" alt="">
+    <p id="condition"></p>
 
+    <div id="stats-row">
+      <div class="stat-tile">
+        <svg class="stat-icon"><use href="assets/icons/drop.svg"></use></svg>
+        <span class="stat-value" id="stat-humidity">--</span>
+        <span class="stat-label">Humidity</span>
+      </div>
+      <div class="stat-tile">
+        <svg class="stat-icon"><use href="assets/icons/wind.svg"></use></svg>
+        <span class="stat-value" id="stat-wind">--</span>
+        <span class="stat-label">Wind</span>
+      </div>
+      <div class="stat-tile">
+        <svg class="stat-icon"><use href="assets/icons/thermometer.svg"></use></svg>
+        <span class="stat-value" id="stat-feelslike">--</span>
+        <span class="stat-label">Feels like</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="script.js"></script>
-
 </body>
-
 </html>
