@@ -66,78 +66,46 @@ function updateWeather(data) {
     "https:" + data.current.condition.icon;
 }
 
+// Dynamic weather icon mapping
+// Safety check for data
+   if (data && data.current && data.current.condition && data.current.condition.text) {
+  const condition = data.current.condition.text.toLowerCase();
+     );
+        let weatherEmoji = "🌡️"; 
 
+        if (condition.includes("sunny") || condition.includes("clear")) {
+            weatherEmoji = "☀️";
+        } else if (condition.includes("cloud") || condition.includes("overcast")) {
+            weatherEmoji = "☁️";
+        } else if (condition.includes("rain") || condition.includes("drizzle")) {
+            weatherEmoji = "🌧️";
+        } else if (condition.includes("snow") || condition.includes("blizzard")) {
+            weatherEmoji = "❄️";
+        } else if (condition.includes("thunder") || condition.includes("storm")) {
+            weatherEmoji = "⛈️";
+        } else if (condition.includes("fog") || condition.includes("mist")) {
+            weatherEmoji = "🌫️";
+        } else if (condition.includes("wind")) {
+            weatherEmoji = "💨";
+        }
+
+        const emojiElement = document.getElementById("weather-emoji");
+        if (emojiElement) {
+            // InnerText update karo, par element ki classes (Dark Mode wali) ko mat hatana
+          emojiElement.textContent = weatherEmoji;
+        }
+    }     // Ensure styling isn't cleared if it's used for Dark Mode
+    }
+}
 document.getElementById("city").addEventListener("keypress", function(e){
 
 if(e.key === "Enter"){
 getWeather();
-document.getElementById("suggestions-list").style.display = "none";
 }
 
 });
 
-// 🏙️ AUTOCOMPLETE SUGGESTIONS LOGIC
-const cityInput = document.getElementById("city");
-const suggestionsList = document.getElementById("suggestions-list");
-let debounceTimer;
 
-cityInput.addEventListener("input", function() {
-    clearTimeout(debounceTimer);
-    const query = this.value.trim();
-    
-    if (query.length < 2) {
-        suggestionsList.style.display = "none";
-        suggestionsList.innerHTML = "";
-        return;
-    }
-    
-    debounceTimer = setTimeout(() => {
-        const url = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
-        
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                suggestionsList.innerHTML = "";
-                
-                if (data.length > 0) {
-                    suggestionsList.style.display = "block";
-                    data.forEach(location => {
-                        const li = document.createElement("li");
-                        li.textContent = `${location.name}, ${location.country}`;
-                        li.addEventListener("click", () => {
-                            cityInput.value = location.name;
-                            suggestionsList.style.display = "none";
-                            getWeather();
-                        });
-                        suggestionsList.appendChild(li);
-                    });
-                } else {
-                    suggestionsList.style.display = "none";
-                }
-            })
-            .catch(() => {
-                suggestionsList.style.display = "none";
-            });
-    }, 300);
-});
-
-// Hide suggestions when clicking outside
-document.addEventListener("click", function(e) {
-    if (e.target !== cityInput && e.target !== suggestionsList) {
-        suggestionsList.style.display = "none";
-    }
-});
-
-
-
-// 🔹 ENTER KEY SEARCH
-document.getElementById("city").addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    getWeather();
-  }
-});
-
-// 🔹 GEOLOCATION
 navigator.geolocation.getCurrentPosition(showPosition);
 
 function showPosition(position) {
