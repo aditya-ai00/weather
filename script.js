@@ -64,6 +64,8 @@ function updateWeather(data) {
 
   document.getElementById("icon").src =
     "https:" + data.current.condition.icon;
+
+    applyWeatherTheme(data);
 }
 
 
@@ -194,3 +196,20 @@ themeBtn.addEventListener("click", () => {
     localStorage.setItem("theme", "light");
   }
 });
+function applyWeatherTheme(data) {
+  const temp = data.current.temp_c;
+  const condition = data.current.condition.text.toLowerCase();
+
+  // Remove previous themes
+  document.body.classList.remove("hot", "rain", "cloudy", "cold");
+
+  if (condition.includes("rain")) {
+    document.body.classList.add("rain");
+  } else if (condition.includes("cloud")) {
+    document.body.classList.add("cloudy");
+  } else if (temp >= 30) {
+    document.body.classList.add("hot");
+  } else if (temp <= 15) {
+    document.body.classList.add("cold");
+  }
+}
