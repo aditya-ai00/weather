@@ -207,7 +207,6 @@ body.dark-mode {
   }
 }
 
-
 /* ⏳ LOADING SPINNER */
 .hidden {
   display: none !important;
@@ -346,4 +345,3 @@ body.dark-mode .suggestions-list li:hover {
     width: 100%;
   }
 }
-
