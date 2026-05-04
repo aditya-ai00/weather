@@ -8,49 +8,45 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<button id="theme-toggle">🌙 Dark Mode</button>
+<main>
+  <button id="theme-toggle">🌙 Dark Mode</button>
 
-<h1>Weather Dashboard</h1>
+  <h1>Weather Dashboard</h1>
 
-<div class="search-box" style="position: relative; display: inline-block;">
-
-  <input
-    type="text"
-    id="city"
-    placeholder="Enter city name"
-    autocomplete="off"
-  />
-
-  <button onclick="getWeather()">Search</button>
-
-  <ul id="suggestions-list" class="suggestions-list"></ul>
-
-</div>
-
-<!-- ✅ Unit Toggle Button -->
-<button id="unit-toggle">Switch to °F</button>
-
-<div id="weather-card">
-
-  <!-- ⏳ Loading Spinner -->
-  <div id="loading-spinner" class="spinner hidden">
-    <div class="spinner-circle"></div>
+  <div class="search-box">
+    <input
+      type="text"
+      id="city"
+      placeholder="Enter city name"
+      autocomplete="off"
+    />
+    <button onclick="getWeather()">Search</button>
+    <ul id="suggestions-list" class="suggestions-list"></ul>
   </div>
 
-  <h2 id="name">City</h2>
+  <!-- ✅ Unit Toggle Button -->
+  <button id="unit-toggle">Switch to °F</button>
 
-  <p id="temp">-- °C</p>
+  <div id="weather-card">
+    <!-- ⏳ Loading Spinner -->
+    <div id="loading-spinner" class="spinner hidden">
+      <div class="spinner-circle"></div>
+    </div>
 
-  <p id="condition"></p>
-
-  <img id="icon" alt="">
-
-</div>
+    <h2 id="name">City</h2>
+    <p id="temp">-- °C</p>
+    <p id="condition"></p>
+    <img id="icon" alt="Weather icon">
+  </div>
+</main>
 
 <script src="script.js"></script>
 
