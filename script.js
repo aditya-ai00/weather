@@ -14,12 +14,7 @@ function getWeather() {
 
   let query;
 
-  // ✅ Fix: default country handling
-  if (city.includes(",")) {
-    query = city;
-  } else {
-    query = city + ",IN";
-  }
+  query=city;
 
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
 
@@ -105,7 +100,7 @@ cityInput.addEventListener("input", function() {
                         const li = document.createElement("li");
                         li.textContent = `${location.name}, ${location.country}`;
                         li.addEventListener("click", () => {
-                            cityInput.value = location.name;
+                            cityInput.value = `${location.name}, ${location.country}`;
                             suggestionsList.style.display = "none";
                             getWeather();
                         });
