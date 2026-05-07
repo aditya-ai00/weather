@@ -1,4 +1,11 @@
-const apiKey = "f0133e94263d448c963164120261904";
+const apiKey = (typeof config !== "undefined" && config.WEATHER_API_KEY)
+  ? config.WEATHER_API_KEY
+  : null;
+
+if (!apiKey) {
+  document.getElementById("weather-card").innerHTML =
+    "<p style='color:white;'>⚠️ API key missing. Please create a config.js file. Refer to config.example.js</p>";
+}const apiKey = "f0133e94263d448c963164120261904";
 
 let currentUnit = "C"; // default
 let currentData = null; // store latest weather
