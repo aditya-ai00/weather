@@ -12,20 +12,27 @@ function getWeather() {
     return;
   }
 
-  let query = city.includes(",") ? city : city + ",IN";
+  let query = city;
 
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(query)}`;
+
+  const spinner = document.getElementById("loading-spinner");
+  spinner.classList.remove("hidden");
 
   fetch(url)
     .then(res => res.json())
     .then(data => {
+      spinner.classList.add("hidden");
+
       if (data.error) {
         alert(data.error.message);
         return;
       }
+
       updateWeather(data);
     })
     .catch(() => {
+      spinner.classList.add("hidden");
       alert("Failed to fetch weather data");
     });
 }
@@ -35,12 +42,12 @@ function updateWeather(data) {
   currentData = data;
 
   document.getElementById("name").innerText =
-    data.location.name + ", " + data.location.country;
+    `${data.location.name}, ${data.location.country}`;
 
   document.getElementById("temp").innerText =
     currentUnit === "C"
-      ? Math.round(data.current.temp_c) + " °C"
-      : Math.round(data.current.temp_f) + " °F";
+      ? `${Math.round(data.current.temp_c)} °C`
+      : `${Math.round(data.current.temp_f)} °F`;
 
   document.getElementById("condition").innerText =
     data.current.condition.text;
@@ -49,10 +56,11 @@ function updateWeather(data) {
     "https:" + data.current.condition.icon;
 }
 
-/* 🔹 ENTER KEY SEARCH (MERGED) */
+/* 🔹 ENTER KEY SEARCH */
 document.getElementById("city").addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
     getWeather();
+
     const suggestions = document.getElementById("suggestions-list");
     if (suggestions) suggestions.style.display = "none";
   }
@@ -61,10 +69,12 @@ document.getElementById("city").addEventListener("keypress", function (e) {
 /* 🏙️ AUTOCOMPLETE SUGGESTIONS */
 const cityInput = document.getElementById("city");
 const suggestionsList = document.getElementById("suggestions-list");
+
 let debounceTimer;
 
 cityInput.addEventListener("input", function () {
   clearTimeout(debounceTimer);
+
   const query = this.value.trim();
 
   if (query.length < 2) {
@@ -86,10 +96,11 @@ cityInput.addEventListener("input", function () {
 
           data.forEach(location => {
             const li = document.createElement("li");
+
             li.textContent = `${location.name}, ${location.country}`;
 
             li.addEventListener("click", () => {
-              cityInput.value = location.name;
+              cityInput.value = `${location.name}, ${location.country}`;
               suggestionsList.style.display = "none";
               getWeather();
             });
@@ -113,7 +124,7 @@ document.addEventListener("click", function (e) {
   }
 });
 
-/* 🔹 GEOLOCATION */
+/* 🔹 AUTO GEOLOCATION ON PAGE LOAD */
 navigator.geolocation.getCurrentPosition(showPosition);
 
 function showPosition(position) {
@@ -122,9 +133,83 @@ function showPosition(position) {
 
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
 
+  const spinner = document.getElementById("loading-spinner");
+
+  spinner.classList.remove("hidden");
+
   fetch(url)
     .then(res => res.json())
-    .then(data => updateWeather(data));
+    .then(data => {
+      spinner.classList.add("hidden");
+      updateWeather(data);
+    })
+    .catch(() => {
+      spinner.classList.add("hidden");
+    });
+}
+
+/* 📍 USER LOCATION BUTTON */
+function getLocationWeather() {
+  const geoBtn = document.getElementById("geo-btn");
+  const geoError = document.getElementById("geo-error");
+  const spinner = document.getElementById("loading-spinner");
+
+  geoError.classList.add("hidden");
+  geoError.innerText = "";
+
+  if (!navigator.geolocation) {
+    geoError.innerText = "Geolocation not supported.";
+    geoError.classList.remove("hidden");
+    return;
+  }
+
+  geoBtn.innerText = "⏳";
+  geoBtn.disabled = true;
+
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
+
+      spinner.classList.remove("hidden");
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          spinner.classList.add("hidden");
+
+          geoBtn.innerText = "📍";
+          geoBtn.disabled = false;
+
+          if (data.error) {
+            geoError.innerText = "Could not fetch location weather.";
+            geoError.classList.remove("hidden");
+            return;
+          }
+
+          updateWeather(data);
+        })
+        .catch(() => {
+          spinner.classList.add("hidden");
+
+          geoBtn.innerText = "📍";
+          geoBtn.disabled = false;
+
+          geoError.innerText = "Failed to fetch location weather.";
+          geoError.classList.remove("hidden");
+        });
+    },
+
+    function () {
+      geoBtn.innerText = "📍";
+      geoBtn.disabled = false;
+
+      geoError.innerText = "Location access denied.";
+      geoError.classList.remove("hidden");
+    }
+  );
 }
 
 /* 🔹 UNIT TOGGLE */

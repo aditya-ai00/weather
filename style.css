@@ -4,9 +4,15 @@ body {
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   margin-top: 80px;
+  min-height: 100vh;
 }
 
 /* 🔍 SEARCH BOX */
+.search-box {
+  position: relative;
+  display: inline-block;
+}
+
 .search-box input {
   padding: 10px;
   width: 230px;
@@ -28,6 +34,7 @@ body {
   background: #ff4d4d;
 }
 
+/* 🌦 WEATHER CARD */
 #weather-card {
   margin-top: 40px;
 }
@@ -47,7 +54,7 @@ input:focus {
   box-shadow: 0 0 8px rgba(255,255,255,0.6);
 }
 
-/* 🌡️ UNIT TOGGLE (FIXED POSITION) */
+/* 🌡️ UNIT TOGGLE */
 #unit-toggle {
   margin-top: 20px;
   padding: 10px 18px;
@@ -132,9 +139,17 @@ body.dark-mode #theme-toggle {
 
 /* ✨ Pulse Animation */
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* 🌫️ AQ RESULT */
@@ -160,13 +175,96 @@ body.dark-mode #theme-toggle {
   transform: translateY(0);
 }
 
+/* ⏳ LOADING SPINNER */
+.hidden {
+  display: none !important;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.spinner-circle {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255,255,255,0.2);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spinner dark mode */
+body.dark-mode .spinner-circle {
+  border-color: rgba(255,255,255,0.1);
+  border-top-color: #60a5fa;
+}
+
+/* 📍 GEOLOCATION BUTTON */
+#geo-btn {
+  padding: 10px 14px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #764ba2;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#geo-btn:hover {
+  background: #f0e6ff;
+  transform: scale(1.05);
+}
+
+#geo-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+/* Dark mode geo button */
+body.dark-mode #geo-btn {
+  background: #333;
+  color: #60a5fa;
+}
+
+body.dark-mode #geo-btn:hover {
+  background: #444;
+}
+
+/* 📍 GEO ERROR */
+.geo-error-msg {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #ffd6d6;
+  background: rgba(255, 0, 0, 0.15);
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+body.dark-mode .geo-error-msg {
+  color: #fca5a5;
+  background: rgba(255, 0, 0, 0.2);
+}
+
 /* 🏙️ AUTOCOMPLETE */
 .suggestions-list {
   position: absolute;
   top: 100%;
   left: 0;
   width: 250px;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255,255,255,0.95);
   color: #333;
   list-style: none;
   padding: 0;
@@ -181,7 +279,7 @@ body.dark-mode #theme-toggle {
 }
 
 body.dark-mode .suggestions-list {
-  background: rgba(34, 34, 34, 0.95);
+  background: rgba(34,34,34,0.95);
   color: #fff;
 }
 
@@ -198,7 +296,7 @@ body.dark-mode .suggestions-list li:hover {
   background: #444;
 }
 
-/* 📱 RESPONSIVE (FIXED) */
+/* 📱 RESPONSIVE */
 @media (max-width: 600px) {
   body {
     margin-top: 40px;
@@ -217,7 +315,6 @@ body.dark-mode .suggestions-list li:hover {
     margin: 5px 0;
   }
 
-  /* ✅ IMPORTANT FIX: prevent shift */
   #unit-toggle {
     width: auto;
     display: inline-block;
