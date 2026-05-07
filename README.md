@@ -81,3 +81,13 @@ We welcome contributions from everyone! Explore our documentation to get started
 - ⚖️ **[License](docs/LICENSE.md)** - Apache-2.0 License details.
 
 ---
+
+## 📬 Contact
+
+For any queries or collaboration opportunities, feel free to reach out:
+
+📧 **Email:** [adityanyo39@gmail.com](mailto:adityanyo39@gmail.com)  
+🔗 **LinkedIn:** [Aditya Kumar](https://www.linkedin.com/in/aditya-kumar23/)  
+💻 **GitHub:** [aditya-ai00](https://github.com/aditya-ai00)
+
+---

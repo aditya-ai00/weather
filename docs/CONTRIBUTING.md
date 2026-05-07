@@ -142,7 +142,10 @@ We aim to keep things smooth and transparent:
   * You’ll receive feedback, even if the PR isn’t merged immediately.
 * ⌛ Reviews may take **24–72 hours** depending on activity. Thanks for your patience!
 
- > For Any Query, Send DM on LinkedIn [Aditya](https://www.linkedin.com/in/aditya-kumar23/).
+ > For Any Query, reach out via:
+ > - 📧 **Email:** [adityanyo39@gmail.com](mailto:adityanyo39@gmail.com)
+ > - 🔗 **LinkedIn:** [Aditya Kumar](https://www.linkedin.com/in/aditya-kumar23/)
+ > - 💻 **GitHub:** [aditya-ai00](https://github.com/aditya-ai00)
 
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
