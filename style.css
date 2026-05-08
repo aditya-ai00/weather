@@ -295,3 +295,29 @@ body.dark-mode .suggestions-list li:hover {
     width: 100%;
   }
 }
+/* Footer */
+.footer {
+  margin-top: 200px;
+  padding: 18px 10px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Footer in dark mode */
+body.dark-mode .footer {
+  color: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Footer responsiveness */
+@media (max-width: 600px) {
+  .footer {
+    margin-top: 40px;
+    font-size: 13px;
+    padding: 15px 8px;
+  }
+}
+
+
