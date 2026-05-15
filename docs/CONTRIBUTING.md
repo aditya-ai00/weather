@@ -1,9 +1,9 @@
 <h1 align="center">✨ Contributors Guide ✨</h1>
 
-<h3 align="center">Welcome to the weather project! 😍<br>
-We appreciate your interest in contributing.😊<br> </h3>
+<h3 align="center">Welcome to SkyCast! 😍<br>
+We appreciate your interest in contributing to the future of smart weather.😊<br> </h3>
 
-First off, thank you for considering contributing to **weather!** We're excited to have you join our community. Every contribution, no matter how small, helps us build the best academic resource platform for students.
+First off, thank you for considering contributing to **SkyCast!** We're excited to have you join our community. Every contribution, no matter how small, helps us build the most insightful weather platform for everyone.
 
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
@@ -24,9 +24,6 @@ This guide will walk you through the entire contribution process, from setting u
 7. [PR review Process](#-pr-review-process)
 8. [Guidelines](#-Guidelines)
 9. [How To Contribute](#-how-to-contribute)
-10. [Need More Help](#-need-more-help)
-11. [Attribution](#-attribution)
-12. [Thank you for your contribution](#thank-you-for-your-contribution)
 
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
@@ -88,7 +85,7 @@ Click on the Fork button.
 
 ### 2️⃣ Clone Your Fork
 
-git clone https://github.com/your-username/uiverse.git
+git clone https://github.com/your-username/weather.git
 
 ### 3️⃣ Create a Branch
 
@@ -116,12 +113,16 @@ git push origin feature/your-feature-name
 
 📁 weather
 ┣ 📄 index.html
+┣ 📄 features.html
+┣ 📄 docs.html
+┣ 📄 privacy.html
+┣ 📄 terms.html
 ┣ 📄 style.css
 ┣ 📄 script.js
-┣ 📄 config.example.js
-┣ 📄 .gitignore
+┣ 📄 config.js
+┣ 📄 .env
 ┣ 📄 README.md
-┣ 📄 docs/ documentation
+┣ 📄 docs/ (guidelines)
 
 ```
 
@@ -141,7 +142,10 @@ We aim to keep things smooth and transparent:
   * You’ll receive feedback, even if the PR isn’t merged immediately.
 * ⌛ Reviews may take **24–72 hours** depending on activity. Thanks for your patience!
 
- > For Any Query, Send DM on LinkedIn [Aditya](https://www.linkedin.com/in/aditya-kumar23/).
+ > For Any Query, reach out via:
+ > - 📧 **Email:** [adityanyo39@gmail.com](mailto:adityanyo39@gmail.com)
+ > - 🔗 **LinkedIn:** [Aditya Kumar](https://www.linkedin.com/in/aditya-kumar23/)
+ > - 💻 **GitHub:** [aditya-ai00](https://github.com/aditya-ai00)
 
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
@@ -168,32 +172,14 @@ We aim to keep things smooth and transparent:
 
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
-<h2 align="center">Need More Help? 🤔</h1>
-
-<p align="center"> You can refer to the following articles on basics of Git and Github and also contact the Project Mentors, in case you are stuck: <br>
-  <a href="https://help.github.com/en/desktop/contributing-to-projects/creating-an-issue-or-pull-request">How to create a Issue</a> <br>
-  <a href="https://help.github.com/en/github/getting-started-with-github/fork-a-repo">Forking a Repo</a> <br>
-  <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository">Cloning a Repo</a> <br>
-  <a href="https://opensource.com/article/19/7/create-pull-request-github">How to create a Pull Request</a> <br>
-  <a href="https://docs.github.com/get-started">Getting started with Git and GitHub</a> <br>
-</p>
-
 <h3 align="center">Show some &nbsp;❤️&nbsp; by &nbsp;🌟&nbsp; this repository!</h3>
-
-![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
-
-## 🏅 Attribution
-
-This **CONTRIBUTING.md** was prepared with **❤️** by **Divya Jain** for **weather** as part of the **NSoC'26 program.**
-
-The structure and recommendations follow **GitHub Open Source Guides** and best practices used in leading open-source repositories.
 
 ![Line](https://user-images.githubusercontent.com/85225156/171937799-8fc9e255-9889-4642-9c92-6df85fb86e82.gif)
 
 ## 👍 Thank you for your contribution!!
 
 <h3 align="center">
-Thank you for contributing to weather 🌟
+Thank you for contributing to SkyCast 🌟
 <br>
 We can't wait to see what you build! 🍽️✨
 </h3>

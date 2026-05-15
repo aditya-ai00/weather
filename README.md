@@ -7,112 +7,32 @@ This project is part of **Nexus Spring of Code (NSoC) 2026**.
 
 ---
 
-# 🌦️ Weather App — Beyond Just Weather
+# 🌦️ SkyCast — Beyond Just Weather
 
-> ⚡ Fast. Clean. Insightful.  
-> Not just weather data — **weather that helps you decide.**
-
----
-
-## 🌌 What Makes This Different?
-
-Most weather apps show:
-> “30°C, Humid”
-
-This app tells you:
-> “Hot & humid — expect discomfort, stay hydrated 💧”
-
-👉 This project focuses on **decision-making, not just data display.**
-
----
-
-## 🧠 Core Concept: Decision Layer
-
-This app includes a **logic layer** that interprets weather data.
-
-| Condition | Insight |
-|----------|--------|
-| High Temperature | Avoid outdoor activity ☀️ |
-| Rain | Carry umbrella ☔ |
-| High Humidity | Expect discomfort 🌫️ |
-
-📌 Future: AI-powered recommendations
+> 🚀 **Intelligent Fallback Engine** - Seamlessly switching between OpenWeatherMap and WeatherAPI.com for 100% uptime.
 
 ---
 
 ## ✨ Features
 
-🔍 **City Search**  
-- Search weather by entering any city  
+🔍 **Global City Search**  
+- Search weather by entering any city worldwide with smart autocomplete.
 
-🌡️ **Real-Time Data**  
-- Temperature  
-- Humidity  
-- Wind Speed  
-- Weather Conditions  
+🌡️ **Automatic API Fallback**  
+- **Primary:** OpenWeatherMap.org  
+- **Secondary:** WeatherAPI.com (Automatic fallback if primary fails)
 
-🌥️ **Dynamic Weather Icons**  
-- UI updates based on live conditions  
+📅 **Mobile-First Design**  
+- Fully responsive UI that looks stunning on Desktop, Tablet, and Mobile.
 
-🌙 **Dark Mode**  
-- Persistent theme toggle  
+🧠 **Smart Insight Layer**  
+- A logic engine that provides actionable advice based on live conditions.
 
-🌡️ **Unit Converter (°C ↔ °F)**  
-- Instant conversion without API calls  
+📍 **High-Accuracy Geolocation**  
+- Precise location detection with robust error handling.
 
-⚠️ **Error Handling**  
-- Handles invalid inputs gracefully  
-
-🎨 **Minimal UI**  
-- Clean, distraction-free experience  
-
----
-
-## 🔄 How It Works
-
-```text
-User Input
-   ↓
-API Call (WeatherAPI)
-   ↓
-Data Processing Layer
-   ↓
-Insight Generation
-   ↓
-UI Rendering
-```
-
----
-
-## ⚙️ Engineering Decisions
-
-- ⚡ Async API calls for faster response
-- 🧠 Client-side data processing for instant insights
-- 🎯 Minimal dependencies for performance
-
-### Trade-offs
-- No backend → faster but no persistent history
-- Client-only → lightweight but limited scalability
-
----
-
-## 🌍 Real-World Use Cases
-
-- 🏃 Plan workouts
-- 🎒 Student commute planning
-- ✈️ Travel preparation
-- 🌡️ Daily decision making
-
----
-
-## ⚖️ Why This Over Other Weather Apps?
-
-| Feature | This App | Typical Apps |
-|--------|---------|-------------|
-| Clean UI | ✅ | ❌ cluttered |
-| Insight-based | ✅ | ❌ raw data only |
-| Lightweight | ✅ | ❌ heavy |
-| Fast loading | ✅ | ❌ slower |
+🌙 **Compact Tile Interface**  
+- A professional, high-density dashboard using square feature tiles.
 
 ---
 
@@ -120,24 +40,12 @@ UI Rendering
 
 | Technology | Usage |
 |----------|------|
-| HTML | Structure |
-| CSS | Styling |
-| JavaScript | Logic |
-| WeatherAPI | Data |
-| Git | Version Control |
-
----
-
-## 📂 Project Structure
-
-```text
-📁 weather
-┣ 📄 index.html
-┣ 📄 style.css
-┣ 📄 script.js
-┣ 📄 config.example.js
-┣ 📄 README.md
-```
+| HTML5 | Semantic Structure |
+| CSS3 | Responsive Flex/Grid System |
+| JavaScript | Logic, Normalization & Fallbacks |
+| Font Awesome 6 | Visual Icons |
+| OpenWeatherMap | Primary Data Source |
+| WeatherAPI | Secondary/Fallback Source |
 
 ---
 
@@ -146,114 +54,40 @@ UI Rendering
 ```bash
 git clone https://github.com/aditya-ai00/weather.git
 cd weather
-open index.html
+
+# 1. Setup your API Keys
+cp .env.example .env
+# Edit .env and add your keys
 ```
 
 ---
 
 ## 🔑 API Setup
 
-Uses **WeatherAPI**
+SkyCast automatically tries **OpenWeatherMap** first. If it fails (invalid key, rate limit, etc.), it immediately switches to **WeatherAPI.com**.
 
-### Steps:
-1. Go to 👉 https://www.weatherapi.com/api-explorer.aspx  
-2. Generate your API key  
-3. Create `config.js`  
-
-```js
-const config = {
-  WEATHER_API_KEY: "YOUR_KEY"
-};
-```
+1. **OpenWeatherMap:** Get a key at [openweathermap.org](https://openweathermap.org/)
+2. **WeatherAPI:** Get a key at [weatherapi.com](https://www.weatherapi.com/)
 
 ---
 
-## 🚀 Live Demo
+## 🤝 Community & Documentation
 
-🌍 [View Live App](https://weather-pink-psi-97.vercel.app/)
+We welcome contributions from everyone! Explore our documentation to get started:
 
----
-
-## 🔮 Future Roadmap
-- 📅 7-Day Forecast
-- 📊 Weather analytics dashboard
-- 🌍 Multi-city tracking
-- 🔔 Smart alerts
-- 🤖 AI weather assistant
+### 📚 Resources
+- 🛠️ **[Contributing Guide](docs/CONTRIBUTING.md)** - Learn how to set up and submit your changes.
+- 📜 **[Code of Conduct](docs/CODEOFCONDUCT.md)** - Standards for a healthy community.
+- ⚖️ **[License](docs/LICENSE.md)** - Apache-2.0 License details.
 
 ---
 
-## 🤝 Contributing
-
-Want to make this better? 🚀  
-
-### 🔥 High-impact contributions:
-- Add forecast system  
-- Improve UI/UX  
-- Build analytics dashboard  
-- Add AI insights  
-
-### Steps:
-
-```bash
-git checkout -b feature/your-feature
-git commit -m "feat: add feature"
-git push origin feature/your-feature
-```
-Then open a PR with tag NSoC'26.
-
----
-
-## 🐛 Issues
-
-Found a bug? Open an issue — contributions are welcome!
-
----
-
-## 📄 License
-
-Licensed under Apache-2.0
-
----
 ## 📬 Contact
 
-📧 Email: adityanyo39@gmail.com  
-🔗 LinkedIn: https://www.linkedin.com/in/aditya-kumar23/  
-💻 GitHub: https://github.com/aditya-ai00  
+For any queries or collaboration opportunities, feel free to reach out:
+
+📧 **Email:** [adityanyo39@gmail.com](mailto:adityanyo39@gmail.com)  
+🔗 **LinkedIn:** [Aditya Kumar](https://www.linkedin.com/in/aditya-kumar23/)  
+💻 **GitHub:** [aditya-ai00](https://github.com/aditya-ai00)
 
 ---
-
-## 💡 Why This Project?
-
-Most weather apps are:
-- ❌ Too complex  
-- ❌ Filled with ads  
-- ❌ Or too basic  
-
-This project aims to be:
-- ⚡ Fast  
-- 🎯 Simple  
-- 🧠 Actually useful  
-
----
-
-## ⭐ Support
-
-If you like this project:
-👉 Star ⭐ the repo  
-👉 Share it  
-
----
-
-## ⚡ Author
-
-**Aditya**  
-GitHub: https://github.com/aditya-ai00  
-
----
-
-## 🆕 Recent Updates
-
-- 🌙 Dark Mode with persistence  
-- 🌡️ Unit Converter (°C ↔ °F)  
-- ⚡ Performance improvements
