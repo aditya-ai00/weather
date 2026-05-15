@@ -505,3 +505,123 @@ body.dark-mode .suggestions-list li:hover {
   }
 
 }
+
+/* WEATHER CARD */
+#weather-card {
+  max-width: 420px;
+  margin: 30px auto 0;
+  padding: 28px 24px;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* CITY NAME */
+#name {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* TEMPERATURE */
+#temp {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+
+/* WEATHER CONDITION */
+#condition {
+  font-size: 1rem;
+  margin-top: -6px;
+  margin-bottom: 0;
+  opacity: 0.9;
+}
+
+/* WEATHER ICON */
+#icon {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* DETAILS SECTION */
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* INDIVIDUAL DETAIL BOX */
+.detail-box {
+  padding: 14px 10px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.detail-box span {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.detail-box p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* FORECAST SECTION */
+.forecast-container {
+  margin-top: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+/* SEARCH SECTION SPACING */
+.search-box {
+  margin-top: 20px;
+}
+
+/* BUTTON ALIGNMENT */
+.search-box button,
+#unit-toggle,
+#theme-toggle {
+  vertical-align: middle;
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 600px) {
+  #weather-card {
+    padding: 22px 18px;
+    gap: 16px;
+  }
+
+  #name {
+    font-size: 1.7rem;
+  }
+
+  #temp {
+    font-size: 2.5rem;
+  }
+
+  #icon {
+    width: 90px;
+    height: 90px;
+  }
+
+  .weather-details {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-box {
+    padding: 12px;
+  }
+}
