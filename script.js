@@ -28,7 +28,7 @@ function getWeather() {
         alert(data.error.message);
         return;
       }
-
+      localStorage.setItem("lastSearchedCity", city);
       updateWeather(data);
     })
     .catch(() => {
@@ -124,8 +124,16 @@ document.addEventListener("click", function (e) {
   }
 });
 
-/* 🔹 AUTO GEOLOCATION ON PAGE LOAD */
-navigator.geolocation.getCurrentPosition(showPosition);
+/* 🔹 INIT APP ON PAGE LOAD */
+const lastCity = localStorage.getItem("lastSearchedCity");
+
+if (lastCity) {
+  document.getElementById("city").value = lastCity;
+  getWeather();
+} else {
+  /* 🔹 AUTO GEOLOCATION ON PAGE LOAD */
+  navigator.geolocation.getCurrentPosition(showPosition);
+}
 
 function showPosition(position) {
   const lat = position.coords.latitude;
