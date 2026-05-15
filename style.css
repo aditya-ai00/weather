@@ -338,3 +338,163 @@ body.dark-mode .suggestions-list li:hover {
     width: 100%;
   }
 }
+
+/* =========================
+   WEATHER DETAILS
+========================= */
+
+.weather-details {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.detail-box {
+  flex: 1;
+  min-width: 110px;
+  background: rgba(255,255,255,0.1);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.detail-box span {
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.detail-box p {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.detail-box {
+  flex: 1;
+  min-width: 110px;
+  padding: 16px 14px;
+  border-radius: 14px;
+  text-align: center;
+  background: rgba(255,255,255,0.08);
+}
+
+.detail-box span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.8;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.detail-box p {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* =========================
+   FORECAST SECTION
+========================= */
+
+.forecast-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.forecast-card {
+  min-width: 100px;
+  background: rgba(255,255,255,0.1);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.forecast-card img {
+  width: 50px;
+  height: 50px;
+}
+
+/* OPTIONAL SCROLLBAR */
+.forecast-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.forecast-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}
+
+.forecast-card {
+  min-width: 110px;
+  padding: 14px;
+  border-radius: 14px;
+  text-align: center;
+  background: rgba(255,255,255,0.08);
+}
+
+.forecast-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.forecast-card p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 6px 0;
+}
+
+.forecast-card small {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+#weather-card {
+  text-align: center;
+  padding: 28px 24px;
+  border-radius: 20px;
+}
+#name {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+#temp {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  margin: 10px 0;
+}
+#condition {
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-bottom: 18px;
+  text-transform: capitalize;
+}
+#icon {
+  width: 100px;
+  height: 100px;
+  margin: 10px auto 18px;
+  display: block;
+}
+@media (max-width: 600px) {
+
+  #temp {
+    font-size: 3.2rem;
+  }
+
+  #name {
+    font-size: 1.6rem;
+  }
+
+  .detail-box {
+    min-width: 100%;
+  }
+
+}

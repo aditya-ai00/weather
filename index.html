@@ -46,6 +46,9 @@
 <div id="weather-card">
 
   <!-- ⏳ Loading Spinner -->
+  <div id="weather-card">
+
+  <!-- ⏳ Loading Spinner -->
   <div id="loading-spinner" class="spinner hidden">
     <div class="spinner-circle"></div>
   </div>
@@ -58,7 +61,31 @@
 
   <img id="icon" alt="">
 
+  <!-- EXTRA WEATHER DETAILS -->
+  <div id="weather-details" class="weather-details hidden">
+
+    <div class="detail-box">
+      <span>💧 Humidity</span>
+      <p id="humidity">--%</p>
+    </div>
+
+    <div class="detail-box">
+      <span>🌬 Wind</span>
+      <p id="wind">-- km/h</p>
+    </div>
+
+    <div class="detail-box">
+      <span>🌡 Feels Like</span>
+      <p id="feels-like">-- °C</p>
+    </div>
+
+  </div>
+
+  <!-- FORECAST -->
+  <div id="forecast" class="forecast-container"></div>
+
 </div>
+  
 
 <div class="airquality">
   <button>AQ-check</button>
