@@ -338,3 +338,71 @@ body.dark-mode .suggestions-list li:hover {
     width: 100%;
   }
 }
+
+/* =========================
+   WEATHER DETAILS
+========================= */
+
+.weather-details {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.detail-box {
+  flex: 1;
+  min-width: 110px;
+  background: rgba(255,255,255,0.1);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.detail-box span {
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.detail-box p {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* =========================
+   FORECAST SECTION
+========================= */
+
+.forecast-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.forecast-card {
+  min-width: 100px;
+  background: rgba(255,255,255,0.1);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.forecast-card img {
+  width: 50px;
+  height: 50px;
+}
+
+/* OPTIONAL SCROLLBAR */
+.forecast-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.forecast-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}

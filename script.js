@@ -6,10 +6,13 @@ let currentData = null;
 /* 🔹 GET WEATHER */
 function getWeather() {
   const city = document.getElementById("city").value.trim();
+  const response = await fetch(apiUrl);
 
+  const data = await response.json();
   if (!city) {
     alert("Please enter a city name");
     return;
+
   }
 
   let query = city;
@@ -54,6 +57,20 @@ function updateWeather(data) {
 
   document.getElementById("icon").src =
     "https:" + data.current.condition.icon;
+
+    /* EXTRA WEATHER DETAILS */
+
+document.getElementById("humidity").textContent =
+  `${data.main.humidity}%`;
+
+document.getElementById("wind").textContent =
+  `${data.wind.speed} km/h`;
+
+document.getElementById("feels-like").textContent =
+  `${Math.round(data.main.feels_like)}°${isCelsius ? "C" : "F"}`;
+
+document.getElementById("weather-details")
+  .classList.remove("hidden");
 }
 
 /* 🔹 ENTER KEY SEARCH */
@@ -245,6 +262,56 @@ themeBtn.addEventListener("click", function () {
     themeBtn.innerText = "🌙 Dark Mode";
     localStorage.setItem("theme", "light");
   }
+});async function getForecast(city) {
+
+  const forecastURL =
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${isCelsius ? "metric" : "imperial"}`;
+
+  const response = await fetch(forecastURL);
+
+  const data = await response.json();
+
+  displayForecast(data);
+}
+
+function displayForecast(forecastData) {
+
+  const forecastContainer =
+    document.getElementById("forecast");
+
+  forecastContainer.innerHTML = "";
+
+  const dailyForecasts = forecastData.list.filter(
+    item => item.dt_txt.includes("12:00:00")
+  );
+
+  dailyForecasts.slice(0, 3).forEach(day => {
+
+    const card = document.createElement("div");
+
+    card.className = "forecast-card";
+
+    card.innerHTML = `
+      <h4>
+        ${new Date(day.dt_txt)
+          .toLocaleDateString("en-US", {
+            weekday: "short"
+          })}
+      </h4>
+
+      <img
+        src="https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png"
+        alt="forecast icon"
+      >
+
+      <p>${Math.round(day.main.temp)}°</p>
+
+      <small>${day.weather[0].main}</small>
+    `;
+
+    forecastContainer.appendChild(card);
+  });
+}
 });
 
 /* 🌿 AIR QUALITY CHECK */
