@@ -68,6 +68,9 @@ function fetchWeatherData(url) {
   if (dashboardContent) dashboardContent.classList.add("hidden");
   if (loadingSpinner) loadingSpinner.classList.remove("hidden");
 
+  const spinner = document.getElementById("loading-spinner");
+  spinner.classList.remove("hidden");
+
   fetch(url)
     .then(res => res.json())
     .then(data => {
