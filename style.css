@@ -209,37 +209,46 @@ body.dark-mode .spinner-circle {
 }
 
 /* 📍 GEOLOCATION BUTTON */
+/* 📍 GEOLOCATION BUTTON (MATCHED STYLE) */
+/* 📍 GEOLOCATION BUTTON (NEON BLUE VARIATION) */
 #geo-btn {
-  padding: 10px 14px;
+  padding: 10px 18px; 
   margin-left: 8px;
   border: none;
-  border-radius: 6px;
-  background: #ffffff;
-  color: #764ba2;
-  font-size: 16px;
+  border-radius: 25px; /* Pill shape to match Unit Toggle */
+  background: white; /* Cyan to Blue gradient */
+  color: white;
+  font-size: 18px;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  vertical-align: middle;
+  box-shadow: 0 4px 10px rgba(0, 210, 255, 0.3); /* Subtle neon glow */
 }
 
 #geo-btn:hover {
-  background: #f0e6ff;
-  transform: scale(1.05);
+  transform: translateY(-2px) scale(1.05);; /* Stronger glow on hover */
+  filter: brightness(1.1);
 }
 
-#geo-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-  transform: none;
+#geo-btn:active {
+  transform: scale(0.95);
 }
+
 
 /* Dark mode geo button */
+/* Dark mode geo button */
 body.dark-mode #geo-btn {
-  background: #333;
-  color: #60a5fa;
+  background: #333; /* Matched to Dark Mode Search button */
+  color: #fff;
 }
 
 body.dark-mode #geo-btn:hover {
   background: #444;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.1);
 }
 
 /* 📍 GEO ERROR */
@@ -336,5 +345,11 @@ body.dark-mode .suggestions-list li:hover {
 
   .suggestions-list {
     width: 100%;
+  }
+
+  #geo-btn {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px; /* Adds spacing when stacked */
   }
 }
