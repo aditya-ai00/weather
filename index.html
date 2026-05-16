@@ -13,11 +13,12 @@
 
 <body>
 
-<button id="theme-toggle">🌙 Dark Mode</button>
+<div class="top-bar">
+  <h1>Weather Dashboard</h1>
+  <button id="theme-toggle">🌙 Dark Mode</button>
+</div>
 
-<h1>Weather Dashboard</h1>
-
-<div class="search-box" style="position: relative; display: inline-block;">
+<div class="search-box">
 
   <input
     type="text"
@@ -26,7 +27,7 @@
     autocomplete="off"
   />
 
-  <button onclick="getWeather()">Search</button>
+  <button id="search" onclick="getWeather()">Search</button>
 
 
   <!-- 📍 Geolocation Button -->
