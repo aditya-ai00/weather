@@ -338,3 +338,35 @@ body.dark-mode .suggestions-list li:hover {
     width: 100%;
   }
 }
+
+/* 🕘 RECENT SEARCHES */
+.recent-searches {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.recent-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.recent-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+body.dark-mode .recent-btn {
+  background: #222;
+  color: white;
+}
+
+body.dark-mode .recent-btn:hover {
+  background: #444;
+}
