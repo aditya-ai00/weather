@@ -30,6 +30,7 @@ function getWeather() {
       }
 
       updateWeather(data);
+      saveRecentSearch(data.location.name);
     })
     .catch(() => {
       spinner.classList.add("hidden");
@@ -38,6 +39,48 @@ function getWeather() {
 }
 
 /* 🔹 UPDATE WEATHER UI */
+/* 🕘 SAVE RECENT SEARCHES */
+function saveRecentSearch(city) {
+  let searches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+
+  // Remove duplicates
+  searches = searches.filter(item => item !== city);
+
+  // Add latest search at beginning
+  searches.unshift(city);
+
+  // Keep only last 5 searches
+  searches = searches.slice(0, 5);
+
+  localStorage.setItem("recentSearches", JSON.stringify(searches));
+
+  renderRecentSearches();
+}
+
+/* 🕘 SHOW RECENT SEARCHES */
+function renderRecentSearches() {
+  const container = document.getElementById("recent-searches");
+
+  if (!container) return;
+
+  let searches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+
+  container.innerHTML = "";
+
+  searches.forEach(city => {
+    const btn = document.createElement("button");
+
+    btn.className = "recent-btn";
+    btn.innerText = city;
+
+    btn.addEventListener("click", () => {
+      document.getElementById("city").value = city;
+      getWeather();
+    });
+
+    container.appendChild(btn);
+  });
+}
 function updateWeather(data) {
   currentData = data;
 
@@ -300,3 +343,6 @@ aqButton.addEventListener("click", function () {
       aqResult.classList.add("show");
     });
 });
+
+/* 🕘 LOAD RECENT SEARCHES */
+renderRecentSearches();
