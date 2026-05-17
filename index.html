@@ -28,12 +28,20 @@
 
   <button onclick="getWeather()">Search</button>
 
+
+  <!-- 📍 Geolocation Button -->
+  <button id="geo-btn" onclick="getLocationWeather()" title="Use my location">📍</button>
+
   <ul id="suggestions-list" class="suggestions-list"></ul>
+
 
 </div>
 
 <!-- ✅ Unit Toggle Button -->
 <button id="unit-toggle">Switch to °F</button>
+
+<!-- 📍 Geolocation error message -->
+<p id="geo-error" class="hidden geo-error-msg"></p>
 
 <div id="weather-card">
 
@@ -52,6 +60,11 @@
 
 </div>
 
+<div class="airquality">
+  <button>AQ-check</button>
+</div>
+
+<div id="aq-result"></div>
 <script src="script.js"></script>
 
 </body>
