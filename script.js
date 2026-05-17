@@ -227,24 +227,42 @@ document.getElementById("unit-toggle").addEventListener("click", function () {
   updateWeather(currentData);
 });
 
+
+
 /* 🌙 DARK MODE */
 const themeBtn = document.getElementById("theme-toggle");
 
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark-mode");
-  themeBtn.innerText = "☀️ Light Mode";
+// Update button text based on active theme
+function updateThemeLabel() {
+  if (document.body.classList.contains("dark-mode")) {
+    themeBtn.innerText = "🌙 Dark Mode";
+  } else {
+    themeBtn.innerText = "☀️ Light Mode";
+  }
 }
 
+// Apply saved theme
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+}
+
+// Set correct label immediately
+updateThemeLabel();
+
+themeBtn.addEventListener("click", () => {
 themeBtn.addEventListener("click", function () {
   document.body.classList.toggle("dark-mode");
 
   if (document.body.classList.contains("dark-mode")) {
-    themeBtn.innerText = "☀️ Light Mode";
     localStorage.setItem("theme", "dark");
   } else {
-    themeBtn.innerText = "🌙 Dark Mode";
     localStorage.setItem("theme", "light");
   }
+
+  updateThemeLabel();
+});
+
+
 });
 
 /* 🌿 AIR QUALITY CHECK */
