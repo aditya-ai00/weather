@@ -4,69 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
-
-  <!-- Favicon -->
+  <meta name="description" content="A modern, clean, and responsive weather dashboard.">
   <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
 
-<button id="theme-toggle">🌙 Dark Mode</button>
+<div class="dashboard-wrapper">
+  <header class="top-bar">
+    <h1 class="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-sun"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M2 12h2"/><path d="m20 12-1.5 1.5"/><path d="M22 22H7a5 5 0 1 1 4.9-6H14a3 3 0 0 1 0 6Z"/><path d="m15 15-2.5-2.5"/></svg>
+      Weather
+    </h1>
+    <button id="theme-toggle" class="btn-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      Dark Mode
+    </button>
+  </header>
 
-<h1>Weather Dashboard</h1>
+  <main class="main-content">
+    
+    <div class="search-section glass-panel">
+      <div class="search-box">
+        <div class="input-group">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="city" placeholder="Search for a city..." autocomplete="off" />
+          <button id="geo-btn" class="btn-geo" onclick="getLocationWeather()" title="Use my location">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </button>
+        </div>
+        <button class="btn-primary" onclick="getWeather()">Search</button>
+        <ul id="suggestions-list" class="suggestions-list"></ul>
+      </div>
+      <p id="geo-error" class="hidden geo-error-msg"></p>
+    </div>
 
-<div class="search-box" style="position: relative; display: inline-block;">
+    <div id="weather-card" class="weather-display glass-panel">
+      <div id="loading-spinner" class="spinner hidden">
+        <div class="spinner-circle"></div>
+      </div>
+      
+      <div class="weather-content">
+        <div class="weather-header">
+          <h2 id="name">Search for a location</h2>
+          <p id="condition" class="condition">--</p>
+        </div>
+        
+        <div class="weather-body">
+          <div class="temp-block">
+            <img id="icon" alt="" src="" style="display: none;" onload="this.style.display='block'" onerror="this.style.display='none'">
+            <div class="temp-value">
+              <span id="temp">-- °C</span>
+            </div>
+          </div>
+        </div>
 
-  <input
-    type="text"
-    id="city"
-    placeholder="Enter city name"
-    autocomplete="off"
-  />
+        <div class="weather-footer">
+          <button id="unit-toggle" class="btn-secondary">Switch to °F</button>
+        </div>
+      </div>
+    </div>
 
-  <button onclick="getWeather()">Search</button>
-
-
-  <!-- 📍 Geolocation Button -->
-  <button id="geo-btn" onclick="getLocationWeather()" title="Use my location">📍</button>
-
-  <ul id="suggestions-list" class="suggestions-list"></ul>
-
-
+    <div class="insights-section glass-panel">
+      <div class="insight-header">
+        <h3>Air Quality</h3>
+        <p>Check the PM2.5 level and health status</p>
+      </div>
+      <div class="airquality">
+        <button class="btn-primary btn-pulse">Check Air Quality</button>
+      </div>
+      <div id="aq-result"></div>
+    </div>
+    
+  </main>
 </div>
 
-<!-- ✅ Unit Toggle Button -->
-<button id="unit-toggle">Switch to °F</button>
-
-<!-- 📍 Geolocation error message -->
-<p id="geo-error" class="hidden geo-error-msg"></p>
-
-<div id="weather-card">
-
-  <!-- ⏳ Loading Spinner -->
-  <div id="loading-spinner" class="spinner hidden">
-    <div class="spinner-circle"></div>
-  </div>
-
-  <h2 id="name">City</h2>
-
-  <p id="temp">-- °C</p>
-
-  <p id="condition"></p>
-
-  <img id="icon" alt="">
-
-</div>
-
-<div class="airquality">
-  <button>AQ-check</button>
-</div>
-
-<div id="aq-result"></div>
 <script src="script.js"></script>
-
 </body>
-
 </html>
